@@ -3,7 +3,7 @@
 	"name": "Obsidian Keep",
 	"version": "1.0.0",
 	"minAppVersion": "0.13.33",
-	"description": "An Obsidian plugin that integrates simply with Google Keep",
+	"description": "An Obsidian plugin that displays Google Keep in the app",
 	"author": "Ellpeck",
 	"authorUrl": "https://ellpeck.de",
 	"isDesktopOnly": false
