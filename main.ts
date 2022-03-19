@@ -38,7 +38,8 @@ export class KeepView extends ItemView {
 	async onload(): Promise<void> {
 		this.keep = new remote.BrowserView();
 		await this.keep.webContents.loadURL('https://keep.google.com');
-		this.registerInterval(window.setInterval(() => this.update(), 16.67));
+		this.keep.webContents.setZoomLevel(0);
+		this.registerInterval(window.setInterval(() => this.update(), 33.33));
 	}
 
 	onunload(): void {
