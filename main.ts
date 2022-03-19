@@ -1,5 +1,5 @@
 import { ItemView, Plugin } from 'obsidian';
-import { BrowserView, BrowserWindow, remote } from 'electron';
+import { BrowserView, remote } from 'electron';
 
 const viewName: string = "keep";
 const padding: number = 5;
@@ -38,6 +38,7 @@ export class KeepView extends ItemView {
 	async onload(): Promise<void> {
 		this.keep = new remote.BrowserView();
 		await this.keep.webContents.loadURL('https://keep.google.com');
+		this.keep.webContents.setZoomLevel(-1);
 		this.registerInterval(window.setInterval(() => this.update(), 16.67));
 	}
 
