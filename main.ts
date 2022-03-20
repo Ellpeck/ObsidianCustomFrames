@@ -3,6 +3,7 @@ import { BrowserView, remote } from 'electron';
 
 const viewName: string = "keep";
 const defaultSettings: KeepSettings = {
+	minimumWidth: 356,
 	padding: 5,
 	css: `/* hide the menu bar and the "Keep" logo and text */
 .PvRhvb-qAWA2, .gb_qc { 
@@ -19,6 +20,7 @@ const defaultSettings: KeepSettings = {
 }
 
 interface KeepSettings {
+	minimumWidth: number;
 	padding: number;
 	css: string;
 }
@@ -77,6 +79,7 @@ class KeepView extends ItemView {
 		await this.keep.webContents.loadURL('https://keep.google.com');
 		await this.keep.webContents.insertCSS(this.settings.css);
 		this.registerInterval(window.setInterval(() => this.update(), 33.33));
+		this.resizeIfNecessary();
 	}
 
 	onunload(): void {
@@ -107,10 +110,10 @@ class KeepView extends ItemView {
 			} else if (!this.visible && !covered) {
 				this.show();
 			}
-
-			if (this.visible)
-				this.resizeIfNecessary();
 		}
+
+		if (this.visible)
+			this.resizeIfNecessary();
 	}
 
 	hide() {
@@ -124,18 +127,16 @@ class KeepView extends ItemView {
 		if (!this.visible) {
 			remote.BrowserWindow.getFocusedWindow().addBrowserView(this.keep);
 			this.visible = true;
+
+			if (this.settings.minimumWidth) {
+				let parent = this.contentEl.closest<HTMLElement>(".workspace-split.mod-horizontal");
+				if (parent) {
+					let minWidth = `${this.settings.minimumWidth + 2 * this.settings.padding}px`;
+					if (parent.style.width < minWidth)
+						parent.style.width = minWidth;
+				}
+			}
 		}
-	}
-
-	protected async onOpen(): Promise<void> {
-		this.show();
-		this.resizeIfNecessary();
-		this.open = true;
-	}
-
-	protected async onClose(): Promise<void> {
-		this.hide();
-		this.open = false;
 	}
 
 	private resizeIfNecessary(): void {
@@ -143,12 +144,21 @@ class KeepView extends ItemView {
 		if (this.size && rect.x == this.size.x && rect.y == this.size.y && rect.width == this.size.width && rect.height == this.size.height)
 			return;
 		this.size = rect;
-		this.keep.setBounds({
-			x: Math.floor(rect.x) + this.settings.padding,
-			y: Math.floor(rect.top) + this.settings.padding,
-			width: Math.floor(rect.width) - 2 * this.settings.padding,
-			height: Math.floor(rect.height) - 2 * this.settings.padding
-		});
+
+		if (rect.width <= 0 || rect.height <= 0) {
+			this.hide();
+			this.open = false;
+		} else {
+			this.show();
+			this.open = true;
+
+			this.keep.setBounds({
+				x: Math.floor(rect.x) + this.settings.padding,
+				y: Math.floor(rect.top) + this.settings.padding,
+				width: Math.floor(rect.width) - 2 * this.settings.padding,
+				height: Math.floor(rect.height) - 2 * this.settings.padding
+			});
+		}
 	}
 
 	private coveredByElement(): boolean {
@@ -176,15 +186,28 @@ class KeepSettingTab extends PluginSettingTab {
 		this.containerEl.createEl('h2', { text: 'Obsidian Keep Settings' });
 
 		new Setting(this.containerEl)
-			.setName('Padding')
-			.setDesc('The padding that should be left around the inside of the Google Keep view, in pixels.')
-			.addText(async t => {
+			.setName("Minimum View Width")
+			.setDesc("The minimum width that the Google Keep view should be adjusted to automatically when it is opened. Set to 0 to disable.")
+			.addText(t => {
 				t.inputEl.type = "number";
-				t.setValue(String(this.plugin.settings.padding));
-				t.onChange(async v => this.plugin.settings.padding = Number(v));
-				await this.plugin.saveSettings();
+				t.setValue(String(this.plugin.settings.minimumWidth));
+				t.onChange(async v => {
+					this.plugin.settings.minimumWidth = Number(v);
+					await this.plugin.saveSettings();
+				});
 			});
 
+		new Setting(this.containerEl)
+			.setName("Padding")
+			.setDesc("The padding that should be left around the inside of the Google Keep view, in pixels.")
+			.addText(t => {
+				t.inputEl.type = "number";
+				t.setValue(String(this.plugin.settings.padding));
+				t.onChange(async v => {
+					this.plugin.settings.padding = Number(v);
+					await this.plugin.saveSettings();
+				});
+			});
 		new Setting(this.containerEl)
 			.setName("Additional CSS")
 			.setDesc("A snippet of additional CSS that should be applied to the Google Keep embed. By default, this hides a lot of unnecessary information to make the embed take up less horizontal space.")
