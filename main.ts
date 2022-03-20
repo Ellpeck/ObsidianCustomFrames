@@ -3,7 +3,7 @@ import { BrowserView, remote } from 'electron';
 
 const viewName: string = "keep";
 const defaultSettings: KeepSettings = {
-	minimumWidth: 356,
+	minimumWidth: 358,
 	padding: 5,
 	css: `/* hide the menu bar and the "Keep" logo and text */
 .PvRhvb-qAWA2, .gb_qc { 
@@ -197,7 +197,7 @@ class KeepSettingTab extends PluginSettingTab {
 				});
 			});
 		new Setting(this.containerEl)
-			.setName("Padding")
+			.setName("View Padding")
 			.setDesc("The padding that should be left around the inside of the Google Keep view, in pixels.")
 			.addText(t => {
 				t.inputEl.type = "number";
