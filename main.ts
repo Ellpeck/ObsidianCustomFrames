@@ -114,7 +114,7 @@ export class KeepView extends ItemView {
 	}
 
 	private coveredByElement(): boolean {
-		let nodes = document.body.querySelectorAll(".modal-bg, .menu");
+		let nodes = document.body.querySelectorAll(".modal-bg, .menu, .notice");
 		for (let i = 0; i < nodes.length; i++) {
 			let rect = nodes[i].getBoundingClientRect();
 			if (rect.left < this.size.right && this.size.left < rect.right && rect.top < this.size.bottom && this.size.top < rect.bottom)
