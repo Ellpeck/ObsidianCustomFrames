@@ -1,15 +1,36 @@
-import { ItemView, Plugin } from 'obsidian';
+import { App, ItemView, Plugin, PluginSettingTab, Setting, WorkspaceLeaf } from 'obsidian';
 import { BrowserView, remote } from 'electron';
 
 const viewName: string = "keep";
-const padding: number = 5;
+const defaultSettings: KeepSettings = {
+	padding: 5,
+	css: `/* hide the menu bar and the "Keep" logo and text */
+.PvRhvb-qAWA2, .gb_qc { 
+	display: none !important; 
+}
 
-export default class MyPlugin extends Plugin {
+/* remove the margin around each note so that less horizontal space is taken up */
+.kPTQic-nUpftc .ma6Yeb-r8s4j-gkA7Yd .IZ65Hb-n0tgWb { 
+	margin: 0px !important; 
+}
+.kPTQic-nUpftc .h1U9Be-xhiy4 {
+    margin: 16px 0px 8px 0px !important;
+}`
+}
+
+interface KeepSettings {
+	padding: number;
+	css: string;
+}
+
+export default class KeepPlugin extends Plugin {
+
+	settings: KeepSettings;
 
 	async onload(): Promise<void> {
-		console.log('Loading obsidian-keep');
+		await this.loadSettings();
 
-		this.registerView(viewName, l => new KeepView(l));
+		this.registerView(viewName, l => new KeepView(l, this.settings));
 		this.addCommand({
 			id: "open-keep",
 			name: "Open Keep",
@@ -19,6 +40,8 @@ export default class MyPlugin extends Plugin {
 				this.openKeep();
 			},
 		});
+		this.addSettingTab(new KeepSettingTab(this.app, this));
+
 		this.app.workspace.onLayoutReady(() => this.openKeep());
 	}
 
@@ -26,18 +49,33 @@ export default class MyPlugin extends Plugin {
 		if (!this.app.workspace.getLeavesOfType(viewName).length)
 			this.app.workspace.getRightLeaf(false).setViewState({ type: viewName });
 	}
+
+	async loadSettings() {
+		this.settings = Object.assign({}, defaultSettings, await this.loadData());
+	}
+
+	async saveSettings() {
+		await this.saveData(this.settings);
+	}
 }
 
-export class KeepView extends ItemView {
+class KeepView extends ItemView {
 
+	private settings: KeepSettings;
 	private keep: BrowserView;
 	private visible: boolean;
 	private open: boolean;
 	private size: DOMRect;
 
+	constructor(leaf: WorkspaceLeaf, settings: KeepSettings) {
+		super(leaf);
+		this.settings = settings;
+	}
+
 	async onload(): Promise<void> {
 		this.keep = new remote.BrowserView();
 		await this.keep.webContents.loadURL('https://keep.google.com');
+		await this.keep.webContents.insertCSS(this.settings.css);
 		this.registerInterval(window.setInterval(() => this.update(), 33.33));
 	}
 
@@ -106,10 +144,10 @@ export class KeepView extends ItemView {
 			return;
 		this.size = rect;
 		this.keep.setBounds({
-			x: Math.floor(rect.x) + padding,
-			y: Math.floor(rect.top) + padding,
-			width: Math.floor(rect.width) - 2 * padding,
-			height: Math.floor(rect.height) - 2 * padding
+			x: Math.floor(rect.x) + this.settings.padding,
+			y: Math.floor(rect.top) + this.settings.padding,
+			width: Math.floor(rect.width) - 2 * this.settings.padding,
+			height: Math.floor(rect.height) - 2 * this.settings.padding
 		});
 	}
 
@@ -121,5 +159,39 @@ export class KeepView extends ItemView {
 				return true;
 		}
 		return false;
+	}
+}
+
+class KeepSettingTab extends PluginSettingTab {
+
+	settings: KeepSettings;
+
+	constructor(app: App, plugin: KeepPlugin) {
+		super(app, plugin);
+		this.settings = plugin.settings;
+	}
+
+	display(): void {
+		this.containerEl.empty();
+		this.containerEl.createEl('h2', { text: 'Obsidian Keep Settings' });
+
+		new Setting(this.containerEl)
+			.setName('Padding')
+			.setDesc('The padding that should be left around the inside of the Google Keep view, in pixels.')
+			.addText(t => {
+				t.inputEl.type = "number";
+				t.setValue(String(this.settings.padding));
+				t.onChange(async v => this.settings.padding = Number(v));
+			});
+
+		new Setting(this.containerEl)
+			.setName("Additional CSS")
+			.setDesc("A snippet of additional CSS that should be applied to the Google Keep embed. By default, this hides a lot of unnecessary information to make the embed take up less horizontal space.")
+			.addTextArea(t => {
+				t.inputEl.rows = 10;
+				t.inputEl.cols = 50;
+				t.setValue(this.settings.css);
+				t.onChange(async v => this.settings.css = v);
+			});
 	}
 }
