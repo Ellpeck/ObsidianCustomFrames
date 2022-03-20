@@ -164,11 +164,11 @@ class KeepView extends ItemView {
 
 class KeepSettingTab extends PluginSettingTab {
 
-	settings: KeepSettings;
+	plugin: KeepPlugin;
 
 	constructor(app: App, plugin: KeepPlugin) {
 		super(app, plugin);
-		this.settings = plugin.settings;
+		this.plugin = plugin;
 	}
 
 	display(): void {
@@ -178,10 +178,11 @@ class KeepSettingTab extends PluginSettingTab {
 		new Setting(this.containerEl)
 			.setName('Padding')
 			.setDesc('The padding that should be left around the inside of the Google Keep view, in pixels.')
-			.addText(t => {
+			.addText(async t => {
 				t.inputEl.type = "number";
-				t.setValue(String(this.settings.padding));
-				t.onChange(async v => this.settings.padding = Number(v));
+				t.setValue(String(this.plugin.settings.padding));
+				t.onChange(async v => this.plugin.settings.padding = Number(v));
+				await this.plugin.saveSettings();
 			});
 
 		new Setting(this.containerEl)
@@ -190,8 +191,11 @@ class KeepSettingTab extends PluginSettingTab {
 			.addTextArea(t => {
 				t.inputEl.rows = 10;
 				t.inputEl.cols = 50;
-				t.setValue(this.settings.css);
-				t.onChange(async v => this.settings.css = v);
+				t.setValue(this.plugin.settings.css);
+				t.onChange(async v => {
+					this.plugin.settings.css = v;
+					await this.plugin.saveSettings();
+				});
 			});
 	}
 }
