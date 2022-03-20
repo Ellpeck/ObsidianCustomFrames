@@ -3,7 +3,7 @@ import { BrowserView, remote } from 'electron';
 
 const viewName: string = "keep";
 const defaultSettings: KeepSettings = {
-	minimumWidth: 358,
+	minimumWidth: 360,
 	padding: 5,
 	css: `/* hide the menu bar and the "Keep" logo and text */
 .PvRhvb-qAWA2, .gb_qc { 
