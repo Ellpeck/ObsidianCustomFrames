@@ -196,7 +196,6 @@ class KeepSettingTab extends PluginSettingTab {
 					await this.plugin.saveSettings();
 				});
 			});
-
 		new Setting(this.containerEl)
 			.setName("Padding")
 			.setDesc("The padding that should be left around the inside of the Google Keep view, in pixels.")
