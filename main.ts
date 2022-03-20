@@ -192,7 +192,7 @@ class KeepSettingTab extends PluginSettingTab {
 				t.inputEl.type = "number";
 				t.setValue(String(this.plugin.settings.minimumWidth));
 				t.onChange(async v => {
-					this.plugin.settings.minimumWidth = Number(v);
+					this.plugin.settings.minimumWidth = Number(v) || defaultSettings.minimumWidth;
 					await this.plugin.saveSettings();
 				});
 			});
@@ -203,7 +203,7 @@ class KeepSettingTab extends PluginSettingTab {
 				t.inputEl.type = "number";
 				t.setValue(String(this.plugin.settings.padding));
 				t.onChange(async v => {
-					this.plugin.settings.padding = Number(v);
+					this.plugin.settings.padding = Number(v) || defaultSettings.padding;
 					await this.plugin.saveSettings();
 				});
 			});
@@ -215,7 +215,7 @@ class KeepSettingTab extends PluginSettingTab {
 				t.inputEl.cols = 50;
 				t.setValue(this.plugin.settings.css);
 				t.onChange(async v => {
-					this.plugin.settings.css = v;
+					this.plugin.settings.css = v || defaultSettings.css;
 					await this.plugin.saveSettings();
 				});
 			});
