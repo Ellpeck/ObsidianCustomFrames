@@ -118,7 +118,8 @@ class KeepView extends ItemView {
 
 	hide() {
 		if (this.visible) {
-			remote.BrowserWindow.getFocusedWindow().removeBrowserView(this.keep);
+			for (let window of remote.BrowserWindow.getAllWindows())
+				window.removeBrowserView(this.keep);
 			this.visible = false;
 		}
 	}
