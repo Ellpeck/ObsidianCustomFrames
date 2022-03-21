@@ -1,5 +1,5 @@
 import { App, ItemView, Plugin, PluginSettingTab, Setting, WorkspaceLeaf } from 'obsidian';
-import { BrowserView, remote } from 'electron';
+import { remote, webContents } from 'electron';
 
 const viewName: string = "keep";
 const defaultSettings: KeepSettings = {
@@ -17,7 +17,7 @@ const defaultSettings: KeepSettings = {
 .kPTQic-nUpftc .h1U9Be-xhiy4 {
     margin: 16px 0px 8px 0px !important;
 }`
-}
+};
 
 interface KeepSettings {
 	minimumWidth: number;
@@ -64,30 +64,40 @@ export default class KeepPlugin extends Plugin {
 class KeepView extends ItemView {
 
 	private settings: KeepSettings;
-	private keep: BrowserView;
-	private visible: boolean;
-	private open: boolean;
-	private size: DOMRect;
 
 	constructor(leaf: WorkspaceLeaf, settings: KeepSettings) {
 		super(leaf);
 		this.settings = settings;
 	}
 
-	async onload(): Promise<void> {
-		this.keep = new remote.BrowserView();
-		await this.keep.webContents.loadURL('https://keep.google.com');
-		await this.keep.webContents.insertCSS(this.settings.css);
-		this.registerInterval(window.setInterval(() => this.update(), 33.33));
-		this.resizeIfNecessary();
-	}
+	onload(): void {
+		this.contentEl.empty();
+		this.contentEl.addClass("obsidian-keep-view");
 
-	onunload(): void {
-		this.hide();
-	}
+		let frame = this.contentEl.createEl("iframe");
+		frame.setAttribute("style", `padding: ${this.settings.padding}px`);
+		frame.addClass("obsidian-keep-frame");
+		frame.onload = () => {
+			for (let other of remote.getCurrentWebContents().mainFrame.frames) {
+				if (frame.src.contains(new URL(other.url).host)) {
+					other.executeJavaScript(`
+						let style = document.createElement("style");
+						style.textContent = \`${this.settings.css}\`;
+						document.head.appendChild(style);
+					`);
+				}
+			}
 
-	onResize(): void {
-		this.resizeIfNecessary();
+			if (this.settings.minimumWidth) {
+				let parent = this.contentEl.closest<HTMLElement>(".workspace-split.mod-horizontal");
+				if (parent) {
+					let minWidth = `${this.settings.minimumWidth + 2 * this.settings.padding}px`;
+					if (parent.style.width < minWidth)
+						parent.style.width = minWidth;
+				}
+			}
+		};
+		frame.src = "https://keep.google.com";
 	}
 
 	getViewType(): string {
@@ -100,76 +110,6 @@ class KeepView extends ItemView {
 
 	getIcon(): string {
 		return "documents";
-	}
-
-	update() {
-		if (this.open) {
-			let covered = this.coveredByElement();
-			if (this.visible && covered) {
-				this.hide();
-			} else if (!this.visible && !covered) {
-				this.show();
-			}
-		}
-
-		if (this.visible)
-			this.resizeIfNecessary();
-	}
-
-	hide() {
-		if (this.visible) {
-			for (let window of remote.BrowserWindow.getAllWindows())
-				window.removeBrowserView(this.keep);
-			this.visible = false;
-		}
-	}
-
-	show() {
-		if (!this.visible) {
-			remote.BrowserWindow.getFocusedWindow().addBrowserView(this.keep);
-			this.visible = true;
-
-			if (this.settings.minimumWidth) {
-				let parent = this.contentEl.closest<HTMLElement>(".workspace-split.mod-horizontal");
-				if (parent) {
-					let minWidth = `${this.settings.minimumWidth + 2 * this.settings.padding}px`;
-					if (parent.style.width < minWidth)
-						parent.style.width = minWidth;
-				}
-			}
-		}
-	}
-
-	private resizeIfNecessary(): void {
-		let rect = this.contentEl.getBoundingClientRect();
-		if (this.size && rect.x == this.size.x && rect.y == this.size.y && rect.width == this.size.width && rect.height == this.size.height)
-			return;
-		this.size = rect;
-
-		if (rect.width <= 0 || rect.height <= 0) {
-			this.hide();
-			this.open = false;
-		} else {
-			this.show();
-			this.open = true;
-
-			this.keep.setBounds({
-				x: Math.floor(rect.x) + this.settings.padding,
-				y: Math.floor(rect.top) + this.settings.padding,
-				width: Math.floor(rect.width) - 2 * this.settings.padding,
-				height: Math.floor(rect.height) - 2 * this.settings.padding
-			});
-		}
-	}
-
-	private coveredByElement(): boolean {
-		let nodes = document.body.querySelectorAll(".modal-bg, .menu, .notice");
-		for (let i = 0; i < nodes.length; i++) {
-			let rect = nodes[i].getBoundingClientRect();
-			if (rect.left < this.size.right && this.size.left < rect.right && rect.top < this.size.bottom && this.size.top < rect.bottom)
-				return true;
-		}
-		return false;
 	}
 }
 
@@ -188,7 +128,7 @@ class KeepSettingTab extends PluginSettingTab {
 
 		new Setting(this.containerEl)
 			.setName("Minimum View Width")
-			.setDesc("The minimum width that the Google Keep view should be adjusted to automatically when it is opened. Set to 0 to disable.")
+			.setDesc("The width that the Google Keep view should be adjusted to automatically if it is lower. Set to 0 to disable.")
 			.addText(t => {
 				t.inputEl.type = "number";
 				t.setValue(String(this.plugin.settings.minimumWidth));
