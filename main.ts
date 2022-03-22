@@ -47,13 +47,7 @@ export default class CustomFramesPlugin extends Plugin {
 				this.addCommand({
 					id: `open-${name}`,
 					name: `Open ${frame.displayName}`,
-					checkCallback: (checking: boolean) => {
-						if (this.app.workspace.getLeavesOfType(name).length)
-							return false;
-						if (!checking)
-							this.app.workspace.getRightLeaf(false).setViewState({ type: name });
-						return true;
-					},
+					callback: () => this.openLeaf(name),
 				});
 			} catch {
 				console.error(`Couldn't register frame ${name}, is there already one with the same name?`);
@@ -69,6 +63,12 @@ export default class CustomFramesPlugin extends Plugin {
 
 	async saveSettings() {
 		await this.saveData(this.settings);
+	}
+
+	private async openLeaf(name: string): Promise<void> {
+		if (!this.app.workspace.getLeavesOfType(name).length)
+			await this.app.workspace.getRightLeaf(false).setViewState({ type: name });
+		this.app.workspace.revealLeaf(this.app.workspace.getLeavesOfType(name)[0]);
 	}
 }
 
