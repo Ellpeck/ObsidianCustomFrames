@@ -1,7 +1,7 @@
 {
 	"name": "obsidian-custom-frames",
 	"version": "2.0.0",
-	"description": "An Obsidian plugin that allows adding iframes with custom styling as editor tabs. Also comes with presets for Google Keep and more.",
+	"description": "An Obsidian plugin that turns web apps into panes using iframes with custom styling. Also comes with presets for Google Keep and more.",
 	"main": "main.js",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",

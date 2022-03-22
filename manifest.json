@@ -3,7 +3,7 @@
 	"name": "Custom Frames",
 	"version": "2.0.0",
 	"minAppVersion": "0.14.3",
-	"description": "A plugin that allows adding iframes with custom styling as editor tabs. Also comes with presets for Google Keep and more.",
+	"description": "A plugin that turns web apps into panes using iframes with custom styling. Also comes with presets for Google Keep and more.",
 	"author": "Ellpeck",
 	"authorUrl": "https://ellpeck.de",
 	"isDesktopOnly": true
