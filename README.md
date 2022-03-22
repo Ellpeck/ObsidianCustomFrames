@@ -1,5 +1,5 @@
 # Obsidian Custom Frames
-An Obsidian plugin that allows adding iframes with custom styling as editor tabs. Also comes with presets for Google Keep, Bring and more.
+An Obsidian plugin that allows adding iframes with custom styling as editor tabs. Also comes with presets for Google Keep and more.
 
 ![A screenshot of the plugin in action](screenshot.png)
 
