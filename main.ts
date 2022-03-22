@@ -212,7 +212,7 @@ class CustomFramesSettingTab extends PluginSettingTab {
 		}
 
 		this.containerEl.createEl("hr");
-		this.containerEl.createEl("p", { text: "Create a new frame, either from a preset shipped with the plugin, or a custom one that you can edit yourself. Each frame's tab can be opened using the 'Custom Frames: Open' command." });
+		this.containerEl.createEl("p", { text: "Create a new frame, either from a preset shipped with the plugin, or a custom one that you can edit yourself. After restarting or reloading Obsidian, each frame's tab can be opened using the 'Custom Frames: Open' command." });
 
 		let addDiv = this.containerEl.createDiv();
 		addDiv.addClass("custom-frames-add");
