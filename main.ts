@@ -193,7 +193,7 @@ class CustomFramesSettingTab extends PluginSettingTab {
 				.setName("Additional CSS")
 				.setDesc("A snippet of additional CSS that should be applied to this frame.")
 				.addTextArea(t => {
-					t.inputEl.rows = 10;
+					t.inputEl.rows = 5;
 					t.inputEl.cols = 50;
 					t.setValue(frame.customCss);
 					t.onChange(async v => {
