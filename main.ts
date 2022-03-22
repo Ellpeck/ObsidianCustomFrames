@@ -2,7 +2,7 @@ import { App, ItemView, Plugin, PluginSettingTab, Setting, WorkspaceLeaf } from 
 import { remote, webContents } from 'electron';
 
 const viewName: string = "keep";
-const defaultSettings: KeepSettings = {
+const defaultSettings: CustomFramesSettings = {
 	minimumWidth: 370,
 	padding: 5,
 	css: `/* hide the menu bar and the "Keep" logo and text */
@@ -11,20 +11,20 @@ const defaultSettings: KeepSettings = {
 }`
 };
 
-interface KeepSettings {
+interface CustomFramesSettings {
 	minimumWidth: number;
 	padding: number;
 	css: string;
 }
 
-export default class KeepPlugin extends Plugin {
+export default class CustomFramesPlugin extends Plugin {
 
-	settings: KeepSettings;
+	settings: CustomFramesSettings;
 
 	async onload(): Promise<void> {
 		await this.loadSettings();
 
-		this.registerView(viewName, l => new KeepView(l, this.settings));
+		this.registerView(viewName, l => new CustomFrameView(l, this.settings));
 		this.addCommand({
 			id: "open-keep",
 			name: "Open Keep",
@@ -34,7 +34,7 @@ export default class KeepPlugin extends Plugin {
 				this.openKeep();
 			},
 		});
-		this.addSettingTab(new KeepSettingTab(this.app, this));
+		this.addSettingTab(new CustomFramesSettingTab(this.app, this));
 
 		this.app.workspace.onLayoutReady(() => this.openKeep());
 	}
@@ -53,11 +53,11 @@ export default class KeepPlugin extends Plugin {
 	}
 }
 
-class KeepView extends ItemView {
+class CustomFrameView extends ItemView {
 
-	private settings: KeepSettings;
+	private settings: CustomFramesSettings;
 
-	constructor(leaf: WorkspaceLeaf, settings: KeepSettings) {
+	constructor(leaf: WorkspaceLeaf, settings: CustomFramesSettings) {
 		super(leaf);
 		this.settings = settings;
 	}
@@ -105,18 +105,18 @@ class KeepView extends ItemView {
 	}
 }
 
-class KeepSettingTab extends PluginSettingTab {
+class CustomFramesSettingTab extends PluginSettingTab {
 
-	plugin: KeepPlugin;
+	plugin: CustomFramesPlugin;
 
-	constructor(app: App, plugin: KeepPlugin) {
+	constructor(app: App, plugin: CustomFramesPlugin) {
 		super(app, plugin);
 		this.plugin = plugin;
 	}
 
 	display(): void {
 		this.containerEl.empty();
-		this.containerEl.createEl('h2', { text: 'Obsidian Keep Settings' });
+		this.containerEl.createEl('h2', { text: 'Obsidian Custom Frames Settings' });
 
 		new Setting(this.containerEl)
 			.setName("Minimum View Width")
