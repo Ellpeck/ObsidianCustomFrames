@@ -18,6 +18,7 @@ If you create a frame that you think other people would like, don't hesitate to 
 
 ## Roadmap
 - Allow setting a custom icon for each tab
+- Allow displaying custom frames in Markdown code blocks
 - Possibly allow executing custom JavaScript in iframes (though security implications still need to be explored)
 
 ## Acknowledgements
