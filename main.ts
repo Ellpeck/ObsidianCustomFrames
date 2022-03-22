@@ -6,15 +6,15 @@ const defaultSettings: KeepSettings = {
 	minimumWidth: 360,
 	padding: 5,
 	css: `/* hide the menu bar and the "Keep" logo and text */
-.PvRhvb-qAWA2, .gb_qc { 
+.PvRhvb-qAWA2, .gb_2d.gb_Zc { 
 	display: none !important; 
 }
 
 /* remove the margin around each note so that less horizontal space is taken up */
-.kPTQic-nUpftc .ma6Yeb-r8s4j-gkA7Yd .IZ65Hb-n0tgWb { 
+.kPTQic-nUpftc.ma6Yeb-r8s4j-gkA7Yd.IZ65Hb-n0tgWb { 
 	margin: 0px !important; 
 }
-.kPTQic-nUpftc .h1U9Be-xhiy4 {
+.kPTQic-nUpftc.h1U9Be-xhiy4 {
     margin: 16px 0px 8px 0px !important;
 }`
 };
