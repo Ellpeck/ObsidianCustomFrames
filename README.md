@@ -24,4 +24,6 @@ If you create a frame that you think other people would like, don't hesitate to 
 ## Acknowledgements
 Thanks to [lishid](https://github.com/lishid) for their help with making iframes work in Obsidian for a purpose like this. Also thanks to them for *motivating* me to turn Obsidian Keep into a more versatile plugin, which is how Custom Frames was born.
 
-If you like this plugin and want to support its development, you can do so via [my website](https://ellpeck.de/support). Thanks!
+If you like this plugin and want to support its development, you can do so through my website by clicking this fancy image!
+
+[![Support me (if you want), via Patreon, Ko-fi or GitHub Sponsors](https://ellpeck.de/res/generalsupport.png)](https://ellpeck.de/support)
