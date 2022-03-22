@@ -1,20 +1,32 @@
-import { App, ItemView, Plugin, PluginSettingTab, Setting, WorkspaceLeaf } from 'obsidian';
-import { remote, webContents } from 'electron';
+import { App, ButtonComponent, DropdownComponent, ItemView, Plugin, PluginSettingTab, Setting, WorkspaceLeaf } from "obsidian";
+import { remote } from "electron";
 
-const viewName: string = "keep";
 const defaultSettings: CustomFramesSettings = {
-	minimumWidth: 370,
-	padding: 5,
-	css: `/* hide the menu bar and the "Keep" logo and text */
+	frames: [],
+	padding: 5
+};
+const presets: Record<string, CustomFrame> = {
+	"keep": {
+		url: "https://keep.google.com",
+		displayName: "Google Keep",
+		minimumWidth: 370,
+		customCss: `/* hide the menu bar and the "Keep" text */
 .PvRhvb-qAWA2, .gb_2d.gb_Zc { 
 	display: none !important; 
 }`
+	}
 };
 
 interface CustomFramesSettings {
-	minimumWidth: number;
+	frames: CustomFrame[];
 	padding: number;
-	css: string;
+}
+
+interface CustomFrame {
+	url: string;
+	displayName: string;
+	minimumWidth: number;
+	customCss: string;
 }
 
 export default class CustomFramesPlugin extends Plugin {
@@ -24,24 +36,31 @@ export default class CustomFramesPlugin extends Plugin {
 	async onload(): Promise<void> {
 		await this.loadSettings();
 
-		this.registerView(viewName, l => new CustomFrameView(l, this.settings));
-		this.addCommand({
-			id: "open-keep",
-			name: "Open Keep",
-			checkCallback: (checking: boolean) => {
-				if (checking)
-					return !this.app.workspace.getLeavesOfType(viewName).length;
-				this.openKeep();
-			},
-		});
+		for (let frame of this.settings.frames) {
+			if (!frame.url || !frame.displayName)
+				continue;
+			let name = `custom-frames-${frame.displayName.toLowerCase().replace(/\s/g, "-")}`;
+			try {
+				console.log(`Registering frame ${name} for URL ${frame.url}`);
+
+				this.registerView(name, l => new CustomFrameView(l, this.settings, frame, name));
+				this.addCommand({
+					id: `open-${name}`,
+					name: `Open ${frame.displayName}`,
+					checkCallback: (checking: boolean) => {
+						if (this.app.workspace.getLeavesOfType(name).length)
+							return false;
+						if (!checking)
+							this.app.workspace.getRightLeaf(false).setViewState({ type: name });
+						return true;
+					},
+				});
+			} catch {
+				console.error(`Couldn't register frame ${name}, is there already one with the same name?`);
+			}
+		}
+
 		this.addSettingTab(new CustomFramesSettingTab(this.app, this));
-
-		this.app.workspace.onLayoutReady(() => this.openKeep());
-	}
-
-	private openKeep(): void {
-		if (!this.app.workspace.getLeavesOfType(viewName).length)
-			this.app.workspace.getRightLeaf(false).setViewState({ type: viewName });
 	}
 
 	async loadSettings() {
@@ -56,48 +75,52 @@ export default class CustomFramesPlugin extends Plugin {
 class CustomFrameView extends ItemView {
 
 	private settings: CustomFramesSettings;
+	private frame: CustomFrame;
+	private name: string;
 
-	constructor(leaf: WorkspaceLeaf, settings: CustomFramesSettings) {
+	constructor(leaf: WorkspaceLeaf, settings: CustomFramesSettings, frame: CustomFrame, name: string) {
 		super(leaf);
 		this.settings = settings;
+		this.frame = frame;
+		this.name = name;
 	}
 
 	onload(): void {
 		this.contentEl.empty();
-		this.contentEl.addClass("obsidian-keep-view");
+		this.contentEl.addClass("custom-frames-view");
 
 		let frame = this.contentEl.createEl("iframe");
+		frame.addClass("custom-frames-frame");
 		frame.setAttribute("style", `padding: ${this.settings.padding}px`);
-		frame.addClass("obsidian-keep-frame");
 		frame.onload = () => {
 			for (let other of remote.getCurrentWebContents().mainFrame.frames) {
 				if (frame.src.contains(new URL(other.url).host)) {
 					other.executeJavaScript(`
 						let style = document.createElement("style");
-						style.textContent = \`${this.settings.css}\`;
+						style.textContent = \`${this.frame.customCss}\`;
 						document.head.appendChild(style);
 					`);
 				}
 			}
 
-			if (this.settings.minimumWidth) {
+			if (this.frame.minimumWidth) {
 				let parent = this.contentEl.closest<HTMLElement>(".workspace-split.mod-horizontal");
 				if (parent) {
-					let minWidth = `${this.settings.minimumWidth + 2 * this.settings.padding}px`;
+					let minWidth = `${this.frame.minimumWidth + 2 * this.settings.padding}px`;
 					if (parent.style.width < minWidth)
 						parent.style.width = minWidth;
 				}
 			}
 		};
-		frame.src = "https://keep.google.com";
+		frame.src = this.frame.url;
 	}
 
 	getViewType(): string {
-		return viewName;
+		return this.name;
 	}
 
 	getDisplayText(): string {
-		return "Google Keep";
+		return this.frame.displayName;
 	}
 
 	getIcon(): string {
@@ -116,22 +139,12 @@ class CustomFramesSettingTab extends PluginSettingTab {
 
 	display(): void {
 		this.containerEl.empty();
-		this.containerEl.createEl('h2', { text: 'Obsidian Custom Frames Settings' });
+		this.containerEl.createEl("h2", { text: "Custom Frames Settings" });
+		this.containerEl.createEl("p", { text: "Note that Obsidian has to be restarted or reloaded for most of these settings to take effect." });
 
 		new Setting(this.containerEl)
-			.setName("Minimum View Width")
-			.setDesc("The width that the Google Keep view should be adjusted to automatically if it is lower. Set to 0 to disable.")
-			.addText(t => {
-				t.inputEl.type = "number";
-				t.setValue(String(this.plugin.settings.minimumWidth));
-				t.onChange(async v => {
-					this.plugin.settings.minimumWidth = v.length ? Number(v) : defaultSettings.minimumWidth;
-					await this.plugin.saveSettings();
-				});
-			});
-		new Setting(this.containerEl)
-			.setName("View Padding")
-			.setDesc("The padding that should be left around the inside of the Google Keep view, in pixels.")
+			.setName("Frame Padding")
+			.setDesc("The padding that should be left around the inside of custom frame tabs, in pixels.")
 			.addText(t => {
 				t.inputEl.type = "number";
 				t.setValue(String(this.plugin.settings.padding));
@@ -140,17 +153,90 @@ class CustomFramesSettingTab extends PluginSettingTab {
 					await this.plugin.saveSettings();
 				});
 			});
-		new Setting(this.containerEl)
-			.setName("Additional CSS")
-			.setDesc("A snippet of additional CSS that should be applied to the Google Keep embed. By default, this hides a lot of unnecessary information to make the embed take up less horizontal space.")
-			.addTextArea(t => {
-				t.inputEl.rows = 10;
-				t.inputEl.cols = 50;
-				t.setValue(this.plugin.settings.css);
-				t.onChange(async v => {
-					this.plugin.settings.css = v.length ? v : defaultSettings.css;
-					await this.plugin.saveSettings();
+
+		for (let frame of this.plugin.settings.frames) {
+			let heading = this.containerEl.createEl("h3", { text: frame.displayName || "Unnamed Frame" });
+
+			new Setting(this.containerEl)
+				.setName("Display Name")
+				.setDesc("The display name that this frame should have.")
+				.addText(t => {
+					t.setValue(frame.displayName);
+					t.onChange(async v => {
+						frame.displayName = v;
+						heading.setText(frame.displayName || "Unnamed Frame");
+						await this.plugin.saveSettings();
+					});
 				});
+			new Setting(this.containerEl)
+				.setName("URL")
+				.setDesc("The URL that should be opened in this frame.")
+				.addText(t => {
+					t.setValue(frame.url);
+					t.onChange(async v => {
+						frame.url = v;
+						await this.plugin.saveSettings();
+					});
+				});
+			new Setting(this.containerEl)
+				.setName("Minimum Width")
+				.setDesc("The width that this frame's tab should be adjusted to automatically if it is lower. Set to 0 to disable.")
+				.addText(t => {
+					t.inputEl.type = "number";
+					t.setValue(String(frame.minimumWidth));
+					t.onChange(async v => {
+						frame.minimumWidth = v.length ? Number(v) : 0;
+						await this.plugin.saveSettings();
+					});
+				});
+			new Setting(this.containerEl)
+				.setName("Additional CSS")
+				.setDesc("A snippet of additional CSS that should be applied to this frame.")
+				.addTextArea(t => {
+					t.inputEl.rows = 10;
+					t.inputEl.cols = 50;
+					t.setValue(frame.customCss);
+					t.onChange(async v => {
+						frame.customCss = v;
+						await this.plugin.saveSettings();
+					});
+				});
+
+			new ButtonComponent(this.containerEl)
+				.setButtonText("Remove Frame")
+				.onClick(async () => {
+					this.plugin.settings.frames.remove(frame);
+					await this.plugin.saveSettings();
+					this.display();
+				});
+		}
+
+		this.containerEl.createEl("hr");
+		this.containerEl.createEl("p", { text: "Create a new frame, either from a preset shipped with the plugin, or a custom one that you can edit yourself. Each frame's tab can be opened using the 'Custom Frames: Open' command." });
+
+		let addDiv = this.containerEl.createDiv();
+		addDiv.addClass("custom-frames-add");
+		let dropdown = new DropdownComponent(addDiv);
+		dropdown.addOption("new", "Custom");
+		for (let key of Object.keys(presets))
+			dropdown.addOption(key, `${presets[key].displayName} Preset`);
+		new ButtonComponent(addDiv)
+			.setButtonText("Add Frame")
+			.onClick(async () => {
+				let option = dropdown.getValue();
+				if (option == "new") {
+					this.plugin.settings.frames.push({
+						url: "",
+						displayName: "",
+						minimumWidth: 0,
+						customCss: ""
+					});
+				}
+				else {
+					this.plugin.settings.frames.push(presets[option]);
+				}
+				await this.plugin.saveSettings();
+				this.display();
 			});
 	}
 }

@@ -1,10 +1,18 @@
-.obsidian-keep-view {
+.custom-frames-view {
 	padding: 0 !important;
 	overflow: hidden !important;
 }
 
-.obsidian-keep-frame {
+.custom-frames-frame {
 	width: 100%;
 	height: 100%;
 	border: none;
+}
+
+.custom-frames-add {
+	padding: 0 0 18px 0;
+}
+
+.custom-frames-add button {
+	margin-left: 10px;
 }
