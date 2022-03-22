@@ -19,3 +19,8 @@ If you create a frame that you think other people would like, don't hesitate to 
 ## Roadmap
 - Allow setting a custom icon for each tab
 - Possibly allow executing custom JavaScript in iframes (though security implications still need to be explored)
+
+## Acknowledgements
+Thanks to [lishid](https://github.com/lishid) for their help with making iframes work in Obsidian for a purpose like this. Also thanks to them for *motivating* me to turn Obsidian Keep into a more versatile plugin, which is how Custom Frames was born.
+
+If you like this plugin and want to support its development, you can do so via [my website](https://ellpeck.de/support). Thanks!
