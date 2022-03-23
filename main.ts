@@ -270,5 +270,10 @@ class CustomFramesSettingTab extends PluginSettingTab {
 				await this.plugin.saveSettings();
 				this.display();
 			});
+
+		this.containerEl.createEl("hr");
+		this.containerEl.createEl("p", { text: "If you like this plugin and want to support its development, you can do so through my website by clicking this fancy image!" });
+		this.containerEl.createEl("a", { href: "https://ellpeck.de/support" })
+			.createEl("img", { attr: { src: "https://ellpeck.de/res/generalsupport.png" }, cls: "custom-frames-support" });
 	}
 }

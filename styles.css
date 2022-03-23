@@ -11,10 +11,12 @@
 	background-clip: content-box;
 }
 
-.custom-frames-add {
-	padding: 0 0 18px 0;
-}
-
 .custom-frames-add button {
 	margin-left: 10px;
+}
+
+.custom-frames-support {
+	max-width: 50%;
+	width: 400px;
+	height: auto;
 }
