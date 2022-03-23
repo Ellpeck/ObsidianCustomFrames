@@ -90,6 +90,8 @@ class CustomFrameView extends ItemView {
 
 		let frame = this.contentEl.createEl("iframe");
 		frame.addClass("custom-frames-frame");
+		frame.setAttribute("sandbox", "allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts");
+		frame.setAttribute("allow", "encrypted-media; fullscreen; oversized-images; picture-in-picture; sync-xhr; geolocation;");
 		frame.setAttribute("style", `padding: ${this.settings.padding}px`);
 		frame.onload = () => {
 			if (Platform.isDesktopApp) {
