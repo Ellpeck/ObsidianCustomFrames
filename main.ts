@@ -8,6 +8,7 @@ const presets: Record<string, CustomFrame> = {
 	"keep": {
 		url: "https://keep.google.com",
 		displayName: "Google Keep",
+		icon: "files",
 		minimumWidth: 370,
 		customCss: `/* hide the menu bar and the "Keep" text */
 .PvRhvb-qAWA2, .gb_2d.gb_Zc { 
@@ -24,6 +25,7 @@ interface CustomFramesSettings {
 interface CustomFrame {
 	url: string;
 	displayName: string;
+	icon: string;
 	minimumWidth: number;
 	customCss: string;
 }
@@ -127,7 +129,7 @@ class CustomFrameView extends ItemView {
 	}
 
 	getIcon(): string {
-		return "documents";
+		return this.frame.icon ? `lucide-${this.frame.icon}` : "documents";
 	}
 }
 
@@ -143,11 +145,11 @@ class CustomFramesSettingTab extends PluginSettingTab {
 	display(): void {
 		this.containerEl.empty();
 		this.containerEl.createEl("h2", { text: "Custom Frames Settings" });
-		this.containerEl.createEl("p", { text: "Note that Obsidian has to be restarted or reloaded for most of these settings to take effect." });
+		this.containerEl.createEl("p", { text: "Note that Obsidian has to be restarted or reloaded for most of these settings to take effect.", cls: "mod-warning" });
 
 		new Setting(this.containerEl)
 			.setName("Frame Padding")
-			.setDesc("The padding that should be left around the inside of custom frame tabs, in pixels.")
+			.setDesc("The padding that should be left around the inside of custom frame panes, in pixels.")
 			.addText(t => {
 				t.inputEl.type = "number";
 				t.setValue(String(this.plugin.settings.padding));
@@ -172,6 +174,22 @@ class CustomFramesSettingTab extends PluginSettingTab {
 					});
 				});
 			new Setting(this.containerEl)
+				.setName("Icon")
+				.setDesc(createFragment(f => {
+					f.createSpan({ text: "The icon that this frame's pane should have." });
+					f.createEl("br");
+					f.createSpan({ text: "The names of any " });
+					f.createEl("a", { text: "Lucide icons", href: "https://lucide.dev/" });
+					f.createSpan({ text: " can be used." });
+				}))
+				.addText(t => {
+					t.setValue(frame.icon);
+					t.onChange(async v => {
+						frame.icon = v;
+						await this.plugin.saveSettings();
+					});
+				});
+			new Setting(this.containerEl)
 				.setName("URL")
 				.setDesc("The URL that should be opened in this frame.")
 				.addText(t => {
@@ -183,7 +201,11 @@ class CustomFramesSettingTab extends PluginSettingTab {
 				});
 			new Setting(this.containerEl)
 				.setName("Minimum Width")
-				.setDesc("The width that this frame's tab should be adjusted to automatically if it is lower. Set to 0 to disable. Note that this is only applied on Desktop devices.")
+				.setDesc(createFragment(f => {
+					f.createSpan({ text: "The width that this frame's pane should be adjusted to automatically if it is lower. Set to 0 to disable." });
+					f.createEl("br");
+					f.createEl("em", { text: "Note that this is only applied on Desktop devices." });
+				}))
 				.addText(t => {
 					t.inputEl.type = "number";
 					t.setValue(String(frame.minimumWidth));
@@ -194,7 +216,11 @@ class CustomFramesSettingTab extends PluginSettingTab {
 				});
 			new Setting(this.containerEl)
 				.setName("Additional CSS")
-				.setDesc("A snippet of additional CSS that should be applied to this frame. Note that this is only applied on Desktop devices.")
+				.setDesc(createFragment(f => {
+					f.createSpan({ text: "A snippet of additional CSS that should be applied to this frame." });
+					f.createEl("br");
+					f.createEl("em", { text: "Note that this is only applied on Desktop devices." });
+				}))
 				.addTextArea(t => {
 					t.inputEl.rows = 5;
 					t.inputEl.cols = 50;
@@ -215,7 +241,9 @@ class CustomFramesSettingTab extends PluginSettingTab {
 		}
 
 		this.containerEl.createEl("hr");
-		this.containerEl.createEl("p", { text: "Create a new frame, either from a preset shipped with the plugin, or a custom one that you can edit yourself. After restarting or reloading Obsidian, each frame's tab can be opened using the 'Custom Frames: Open' command." });
+		let info = this.containerEl.createEl("p", { text: "Create a new frame, either from a preset shipped with the plugin, or a custom one that you can edit yourself. Each frame's pane can be opened using the 'Custom Frames: Open' command." });
+		info.createEl("br");
+		info.createSpan({ text: "Note that Obsidian has to be restarted or reloaded to activate a newly added frame.", cls: "mod-warning" });
 
 		let addDiv = this.containerEl.createDiv();
 		addDiv.addClass("custom-frames-add");
@@ -231,6 +259,7 @@ class CustomFramesSettingTab extends PluginSettingTab {
 					this.plugin.settings.frames.push({
 						url: "",
 						displayName: "",
+						icon: "",
 						minimumWidth: 0,
 						customCss: ""
 					});
