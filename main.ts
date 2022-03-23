@@ -1,5 +1,4 @@
-import { App, ButtonComponent, DropdownComponent, ItemView, Plugin, PluginSettingTab, Setting, WorkspaceLeaf } from "obsidian";
-import { remote } from "electron";
+import { App, ButtonComponent, DropdownComponent, ItemView, Plugin, PluginSettingTab, Setting, WorkspaceLeaf, Platform } from "obsidian";
 
 const defaultSettings: CustomFramesSettings = {
 	frames: [],
@@ -93,22 +92,24 @@ class CustomFrameView extends ItemView {
 		frame.addClass("custom-frames-frame");
 		frame.setAttribute("style", `padding: ${this.settings.padding}px`);
 		frame.onload = () => {
-			for (let other of remote.getCurrentWebContents().mainFrame.frames) {
-				if (frame.src.contains(new URL(other.url).host)) {
-					other.executeJavaScript(`
+			if (Platform.isDesktopApp) {
+				for (let other of require("electron").remote.getCurrentWebContents().mainFrame.frames) {
+					if (frame.src.contains(new URL(other.url).host)) {
+						other.executeJavaScript(`
 						let style = document.createElement("style");
 						style.textContent = \`${this.frame.customCss}\`;
 						document.head.appendChild(style);
 					`);
+					}
 				}
-			}
 
-			if (this.frame.minimumWidth) {
-				let parent = this.contentEl.closest<HTMLElement>(".workspace-split.mod-horizontal");
-				if (parent) {
-					let minWidth = `${this.frame.minimumWidth + 2 * this.settings.padding}px`;
-					if (parent.style.width < minWidth)
-						parent.style.width = minWidth;
+				if (this.frame.minimumWidth) {
+					let parent = this.contentEl.closest<HTMLElement>(".workspace-split.mod-horizontal");
+					if (parent) {
+						let minWidth = `${this.frame.minimumWidth + 2 * this.settings.padding}px`;
+						if (parent.style.width < minWidth)
+							parent.style.width = minWidth;
+					}
 				}
 			}
 		};
@@ -180,7 +181,7 @@ class CustomFramesSettingTab extends PluginSettingTab {
 				});
 			new Setting(this.containerEl)
 				.setName("Minimum Width")
-				.setDesc("The width that this frame's tab should be adjusted to automatically if it is lower. Set to 0 to disable.")
+				.setDesc("The width that this frame's tab should be adjusted to automatically if it is lower. Set to 0 to disable. Note that this is only applied on Desktop devices.")
 				.addText(t => {
 					t.inputEl.type = "number";
 					t.setValue(String(frame.minimumWidth));
@@ -191,7 +192,7 @@ class CustomFramesSettingTab extends PluginSettingTab {
 				});
 			new Setting(this.containerEl)
 				.setName("Additional CSS")
-				.setDesc("A snippet of additional CSS that should be applied to this frame.")
+				.setDesc("A snippet of additional CSS that should be applied to this frame. Note that this is only applied on Desktop devices.")
 				.addTextArea(t => {
 					t.inputEl.rows = 5;
 					t.inputEl.cols = 50;

@@ -8,8 +8,6 @@ An Obsidian plugin that turns web apps into panes using iframes with custom styl
 ## Usage
 To use this plugin, simply go into its settings and add a new frame, either from a preset shipped with the plugin, or a custom one that you can edit yourself. Each frame's tab can be opened using the 'Custom Frames: Open' command.
 
-Note that this plugin only works on Desktop right now.
-
 ## Presets
 By default, Custom Frames comes with a few presets that allow you to get new tabs for popular sites up and running quickly.
 - Google Keep, optimized for a narrow side tab
