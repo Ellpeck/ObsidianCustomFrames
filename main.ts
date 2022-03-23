@@ -250,7 +250,7 @@ class CustomFramesSettingTab extends PluginSettingTab {
 		let dropdown = new DropdownComponent(addDiv);
 		dropdown.addOption("new", "Custom");
 		for (let key of Object.keys(presets))
-			dropdown.addOption(key, `${presets[key].displayName} Preset`);
+			dropdown.addOption(key, presets[key].displayName);
 		new ButtonComponent(addDiv)
 			.setButtonText("Add Frame")
 			.onClick(async () => {
