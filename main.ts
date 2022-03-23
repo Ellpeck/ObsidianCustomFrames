@@ -102,14 +102,14 @@ class CustomFrameView extends ItemView {
 					`);
 					}
 				}
+			}
 
-				if (this.frame.minimumWidth) {
-					let parent = this.contentEl.closest<HTMLElement>(".workspace-split.mod-horizontal");
-					if (parent) {
-						let minWidth = `${this.frame.minimumWidth + 2 * this.settings.padding}px`;
-						if (parent.style.width < minWidth)
-							parent.style.width = minWidth;
-					}
+			if (Platform.isDesktop && this.frame.minimumWidth) {
+				let parent = this.contentEl.closest<HTMLElement>(".workspace-split.mod-horizontal");
+				if (parent) {
+					let minWidth = `${this.frame.minimumWidth + 2 * this.settings.padding}px`;
+					if (parent.style.width < minWidth)
+						parent.style.width = minWidth;
 				}
 			}
 		};
