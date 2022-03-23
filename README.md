@@ -1,6 +1,8 @@
 # Obsidian Custom Frames
 An Obsidian plugin that turns web apps into panes using iframes with custom styling. Also comes with presets for Google Keep and more.
 
+**This plugin requires Obsidian 0.14.3 or newer due to changes in the way iframes are handled. If you still want to try the plugin, you can [install it manually](https://forum.obsidian.md/t/plugins-mini-faq/7737).**
+
 ![A screenshot of the plugin in action](https://raw.githubusercontent.com/Ellpeck/ObsidianCustomFrames/master/screenshot.png)
 
 ![A screenshot of the plugin's settings](https://raw.githubusercontent.com/Ellpeck/ObsidianCustomFrames/master/settings.png)
