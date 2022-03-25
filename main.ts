@@ -101,9 +101,9 @@ class CustomFrameView extends ItemView {
 					if (frame.src.contains(new URL(other.url).host)) {
 						other.executeJavaScript(`
 						(() => {
-							let style = document.createElement("style");
-							style.textContent = \`${this.frame.customCss}\`;
-							document.head.appendChild(style);
+							let customFramesStyle = document.createElement("style");
+							customFramesStyle.textContent = \`${this.frame.customCss}\`;
+							document.head.appendChild(customFramesStyle);
 						})();
 					`);
 					}
