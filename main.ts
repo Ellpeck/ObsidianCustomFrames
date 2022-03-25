@@ -100,9 +100,11 @@ class CustomFrameView extends ItemView {
 				for (let other of require("electron").remote.getCurrentWebContents().mainFrame.frames) {
 					if (frame.src.contains(new URL(other.url).host)) {
 						other.executeJavaScript(`
-						let style = document.createElement("style");
-						style.textContent = \`${this.frame.customCss}\`;
-						document.head.appendChild(style);
+						(() => {
+							let style = document.createElement("style");
+							style.textContent = \`${this.frame.customCss}\`;
+							document.head.appendChild(style);
+						})();
 					`);
 					}
 				}
