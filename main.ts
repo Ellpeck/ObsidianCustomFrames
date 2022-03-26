@@ -9,12 +9,28 @@ const presets: Record<string, CustomFrame> = {
 		url: "https://keep.google.com",
 		displayName: "Google Keep",
 		icon: "files",
-		hideOnMobile: false,
+		hideOnMobile: true,
 		minimumWidth: 370,
 		customCss: `/* hide the menu bar and the "Keep" text */
 .PvRhvb-qAWA2, .gb_2d.gb_Zc { 
 	display: none !important; 
 }`
+	},
+	"obsidian": {
+		url: "https://forum.obsidian.md/",
+		displayName: "Obsidian Forum",
+		icon: "edit",
+		hideOnMobile: true,
+		minimumWidth: 367,
+		customCss: ""
+	},
+	"notion": {
+		url: "https://www.notion.so/",
+		displayName: "Notion",
+		icon: "box",
+		hideOnMobile: true,
+		minimumWidth: 400,
+		customCss: ""
 	}
 };
 
@@ -274,7 +290,7 @@ class CustomFramesSettingTab extends PluginSettingTab {
 						icon: "",
 						minimumWidth: 0,
 						customCss: "",
-						hideOnMobile: false
+						hideOnMobile: true
 					});
 				}
 				else {
