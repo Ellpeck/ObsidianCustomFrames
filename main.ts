@@ -90,27 +90,15 @@ class CustomFrameView extends ItemView {
 		this.contentEl.empty();
 		this.contentEl.addClass("custom-frames-view");
 
-		let frame = this.contentEl.createEl("iframe");
+		let frame: any = document.createElement("webview");
 		frame.addClass("custom-frames-frame");
-		frame.setAttribute("sandbox", "allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts allow-top-navigation-by-user-activation");
-		frame.setAttribute("allow", "encrypted-media; fullscreen; oversized-images; picture-in-picture; sync-xhr; geolocation;");
+		frame.setAttribute("allowpopups", "");
 		frame.setAttribute("style", `padding: ${this.settings.padding}px`);
-		frame.onload = () => {
-			if (Platform.isDesktopApp) {
-				for (let other of require("electron").remote.getCurrentWebContents().mainFrame.frames) {
-					if (frame.src.contains(new URL(other.url).host)) {
-						other.executeJavaScript(`
-						(() => {
-							let customFramesStyle = document.createElement("style");
-							customFramesStyle.textContent = \`${this.frame.customCss}\`;
-							document.head.appendChild(customFramesStyle);
-						})();
-					`);
-					}
-				}
-			}
+		frame.setAttribute("src", this.frame.url);
+		frame.addEventListener("dom-ready", () => {
+			frame.insertCSS(this.frame.customCss);
 
-			if (Platform.isDesktop && this.frame.minimumWidth) {
+			if (this.frame.minimumWidth) {
 				let parent = this.contentEl.closest<HTMLElement>(".workspace-split.mod-horizontal");
 				if (parent) {
 					let minWidth = `${this.frame.minimumWidth + 2 * this.settings.padding}px`;
@@ -118,8 +106,8 @@ class CustomFrameView extends ItemView {
 						parent.style.width = minWidth;
 				}
 			}
-		};
-		frame.src = this.frame.url;
+		});
+		this.contentEl.appendChild(frame);
 	}
 
 	getViewType(): string {
@@ -203,11 +191,7 @@ class CustomFramesSettingTab extends PluginSettingTab {
 				});
 			new Setting(this.containerEl)
 				.setName("Minimum Width")
-				.setDesc(createFragment(f => {
-					f.createSpan({ text: "The width that this frame's pane should be adjusted to automatically if it is lower. Set to 0 to disable." });
-					f.createEl("br");
-					f.createEl("em", { text: "Note that this is only applied on Desktop devices." });
-				}))
+				.setDesc("The width that this frame's pane should be adjusted to automatically if it is lower. Set to 0 to disable.")
 				.addText(t => {
 					t.inputEl.type = "number";
 					t.setValue(String(frame.minimumWidth));
@@ -218,11 +202,7 @@ class CustomFramesSettingTab extends PluginSettingTab {
 				});
 			new Setting(this.containerEl)
 				.setName("Additional CSS")
-				.setDesc(createFragment(f => {
-					f.createSpan({ text: "A snippet of additional CSS that should be applied to this frame." });
-					f.createEl("br");
-					f.createEl("em", { text: "Note that this is only applied on Desktop devices." });
-				}))
+				.setDesc("A snippet of additional CSS that should be applied to this frame.")
 				.addTextArea(t => {
 					t.inputEl.rows = 5;
 					t.inputEl.cols = 50;
