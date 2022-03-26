@@ -5,6 +5,14 @@ const defaultSettings: CustomFramesSettings = {
 	padding: 5
 };
 const presets: Record<string, CustomFrame> = {
+	"obsidian": {
+		url: "https://forum.obsidian.md/",
+		displayName: "Obsidian Forum",
+		icon: "edit",
+		hideOnMobile: true,
+		minimumWidth: 367,
+		customCss: ""
+	},
 	"keep": {
 		url: "https://keep.google.com",
 		displayName: "Google Keep",
@@ -15,14 +23,6 @@ const presets: Record<string, CustomFrame> = {
 .PvRhvb-qAWA2, .gb_2d.gb_Zc { 
 	display: none !important; 
 }`
-	},
-	"obsidian": {
-		url: "https://forum.obsidian.md/",
-		displayName: "Obsidian Forum",
-		icon: "edit",
-		hideOnMobile: true,
-		minimumWidth: 367,
-		customCss: ""
 	},
 	"notion": {
 		url: "https://www.notion.so/",
