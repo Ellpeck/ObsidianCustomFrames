@@ -9,6 +9,7 @@ const presets: Record<string, CustomFrame> = {
 		url: "https://keep.google.com",
 		displayName: "Google Keep",
 		icon: "files",
+		hideOnMobile: false,
 		minimumWidth: 370,
 		customCss: `/* hide the menu bar and the "Keep" text */
 .PvRhvb-qAWA2, .gb_2d.gb_Zc { 
@@ -26,6 +27,7 @@ interface CustomFrame {
 	url: string;
 	displayName: string;
 	icon: string;
+	hideOnMobile: boolean;
 	minimumWidth: number;
 	customCss: string;
 }
@@ -41,6 +43,10 @@ export default class CustomFramesPlugin extends Plugin {
 			if (!frame.url || !frame.displayName)
 				continue;
 			let name = `custom-frames-${frame.displayName.toLowerCase().replace(/\s/g, "-")}`;
+			if (Platform.isMobileApp && frame.hideOnMobile) {
+				console.log(`Skipping frame ${name} which is hidden on mobile`);
+				continue;
+			}
 			try {
 				console.log(`Registering frame ${name} for URL ${frame.url}`);
 
@@ -90,23 +96,31 @@ class CustomFrameView extends ItemView {
 		this.contentEl.empty();
 		this.contentEl.addClass("custom-frames-view");
 
-		let frame: any = document.createElement("webview");
+		let frame: HTMLIFrameElement | any;
+		if (Platform.isDesktopApp) {
+			frame = document.createElement("webview");
+			frame.setAttribute("allowpopups", "");
+			frame.addEventListener("dom-ready", () => {
+				frame.insertCSS(this.frame.customCss);
+
+				if (this.frame.minimumWidth) {
+					let parent = this.contentEl.closest<HTMLElement>(".workspace-split.mod-horizontal");
+					if (parent) {
+						let minWidth = `${this.frame.minimumWidth + 2 * this.settings.padding}px`;
+						if (parent.style.width < minWidth)
+							parent.style.width = minWidth;
+					}
+				}
+			});
+		}
+		else {
+			frame = document.createElement("iframe");
+			frame.setAttribute("sandbox", "allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts allow-top-navigation-by-user-activation");
+			frame.setAttribute("allow", "encrypted-media; fullscreen; oversized-images; picture-in-picture; sync-xhr; geolocation;");
+		}
 		frame.addClass("custom-frames-frame");
-		frame.setAttribute("allowpopups", "");
 		frame.setAttribute("style", `padding: ${this.settings.padding}px`);
 		frame.setAttribute("src", this.frame.url);
-		frame.addEventListener("dom-ready", () => {
-			frame.insertCSS(this.frame.customCss);
-
-			if (this.frame.minimumWidth) {
-				let parent = this.contentEl.closest<HTMLElement>(".workspace-split.mod-horizontal");
-				if (parent) {
-					let minWidth = `${this.frame.minimumWidth + 2 * this.settings.padding}px`;
-					if (parent.style.width < minWidth)
-						parent.style.width = minWidth;
-				}
-			}
-		});
 		this.contentEl.appendChild(frame);
 	}
 
@@ -166,9 +180,7 @@ class CustomFramesSettingTab extends PluginSettingTab {
 			new Setting(this.containerEl)
 				.setName("Icon")
 				.setDesc(createFragment(f => {
-					f.createSpan({ text: "The icon that this frame's pane should have." });
-					f.createEl("br");
-					f.createSpan({ text: "The names of any " });
+					f.createSpan({ text: "The icon that this frame's pane should have. The names of any " });
 					f.createEl("a", { text: "Lucide icons", href: "https://lucide.dev/" });
 					f.createSpan({ text: " can be used." });
 				}))
@@ -190,8 +202,22 @@ class CustomFramesSettingTab extends PluginSettingTab {
 					});
 				});
 			new Setting(this.containerEl)
+				.setName("Disable on Mobile")
+				.setDesc("Custom Frames is a lot more restricted on mobile devices and doesn't allow for the same types of content to be displayed. If a frame doesn't work as expected on mobile, it can be disabled.")
+				.addToggle(t => {
+					t.setValue(frame.hideOnMobile);
+					t.onChange(async v => {
+						frame.hideOnMobile = v;
+						await this.plugin.saveSettings();
+					});
+				});
+			new Setting(this.containerEl)
 				.setName("Minimum Width")
-				.setDesc("The width that this frame's pane should be adjusted to automatically if it is lower. Set to 0 to disable.")
+				.setDesc(createFragment(f => {
+					f.createSpan({ text: "The width that this frame's pane should be adjusted to automatically if it is lower. Set to 0 to disable." });
+					f.createEl("br");
+					f.createEl("em", { text: "Note that this is only applied on Desktop." });
+				}))
 				.addText(t => {
 					t.inputEl.type = "number";
 					t.setValue(String(frame.minimumWidth));
@@ -202,7 +228,11 @@ class CustomFramesSettingTab extends PluginSettingTab {
 				});
 			new Setting(this.containerEl)
 				.setName("Additional CSS")
-				.setDesc("A snippet of additional CSS that should be applied to this frame.")
+				.setDesc(createFragment(f => {
+					f.createSpan({ text: "A snippet of additional CSS that should be applied to this frame." });
+					f.createEl("br");
+					f.createEl("em", { text: "Note that this is only applied on Desktop." });
+				}))
 				.addTextArea(t => {
 					t.inputEl.rows = 5;
 					t.inputEl.cols = 50;
@@ -240,10 +270,11 @@ class CustomFramesSettingTab extends PluginSettingTab {
 				if (option == "new") {
 					this.plugin.settings.frames.push({
 						url: "",
-						displayName: "",
+						displayName: "New Frame",
 						icon: "",
 						minimumWidth: 0,
-						customCss: ""
+						customCss: "",
+						hideOnMobile: false
 					});
 				}
 				else {
