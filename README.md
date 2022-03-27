@@ -21,6 +21,7 @@ If you create a frame that you think other people would like, don't hesitate to 
 ## Roadmap
 - ~~Allow setting a custom icon for each pane~~
 - Allow displaying custom frames in Markdown code blocks
+- Allow creating links that open in a custom frame rather than the browser
 - Possibly allow executing custom JavaScript in iframes (though security implications still need to be explored)
 
 ## Acknowledgements
