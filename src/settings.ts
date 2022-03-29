@@ -29,6 +29,14 @@ export const presets: Record<string, CustomFrame> = {
         hideOnMobile: true,
         minimumWidth: 400,
         customCss: ""
+    },
+    "twitter": {
+        url: "https://twitter.com",
+        displayName: "Twitter",
+        icon: "twitter",
+        hideOnMobile: true,
+        minimumWidth: 400,
+        customCss: ""
     }
 };
 
