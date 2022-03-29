@@ -11,6 +11,23 @@ export const presets: Record<string, CustomFrame> = {
         minimumWidth: 367,
         customCss: ""
     },
+	"calendar": {
+        url: "https://calendar.google.com/calendar/u/0/r/day",
+        displayName: "Google Calendar",
+        icon: "calendar",
+        hideOnMobile: true,
+        minimumWidth: 490,
+        customCss: `/* hide right-side menu, and some buttons */
+div.d6McF,
+div.pw6cBb,
+div.gb_Td.gb_Va.gb_Id,
+div.Kk7lMc-QWPxkf-LgbsSe-haAclf,
+div.h8Aqhb,
+div.gboEAb,
+div.dwlvNd {
+    display: none !important;
+}`
+    },
     "keep": {
         url: "https://keep.google.com",
         displayName: "Google Keep",
