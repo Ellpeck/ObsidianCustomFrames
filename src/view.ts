@@ -3,6 +3,30 @@ import { CustomFrame, CustomFramesSettings } from "./settings";
 
 export class CustomFrameView extends ItemView {
 
+    private static readonly actions: Action[] = [
+        {
+            name: "Open dev tools",
+            icon: "binary",
+            action: v => v.toggleDevTools()
+        }, {
+            name: "Return to original page",
+            icon: "home",
+            action: v => v.return()
+        }, {
+            name: "Refresh",
+            icon: "refresh-cw",
+            action: v => v.refresh()
+        }, {
+            name: "Go back",
+            icon: "arrow-left",
+            action: v => v.goBack()
+        }, {
+            name: "Go forward",
+            icon: "arrow-right",
+            action: v => v.goForward()
+        }
+    ];
+
     private readonly settings: CustomFramesSettings;
     private readonly data: CustomFrame;
     private readonly name: string;
@@ -14,10 +38,8 @@ export class CustomFrameView extends ItemView {
         this.data = data;
         this.name = name;
 
-        this.addAction("refresh-cw", "Refresh", () => this.refresh());
-        this.addAction("home", "Return to original page", () => this.return());
-        this.addAction("arrow-left", "Go back", () => this.goBack());
-        this.addAction("arrow-right", "Go forward", () => this.goForward());
+        for (let action of CustomFrameView.actions)
+            this.addAction(action.icon, action.name, () => action.action(this));
     }
 
     onload(): void {
@@ -53,26 +75,13 @@ export class CustomFrameView extends ItemView {
 
     onHeaderMenu(menu: Menu): void {
         super.onHeaderMenu(menu);
-        menu.addItem(i => {
-            i.setTitle("Refresh");
-            i.setIcon("refresh-cw");
-            i.onClick(() => this.refresh());
-        });
-        menu.addItem(i => {
-            i.setTitle("Return to original page");
-            i.setIcon("home");
-            i.onClick(() => this.return());
-        });
-        menu.addItem(i => {
-            i.setTitle("Go back");
-            i.setIcon("arrow-left");
-            i.onClick(() => this.goBack());
-        });
-        menu.addItem(i => {
-            i.setTitle("Go forward");
-            i.setIcon("arrow-right");
-            i.onClick(() => this.goForward());
-        });
+        for (let action of CustomFrameView.actions) {
+            menu.addItem(i => {
+                i.setTitle(action.name);
+                i.setIcon(action.icon);
+                i.onClick(() => action.action(this));
+            });
+        }
     }
 
     getViewType(): string {
@@ -112,7 +121,7 @@ export class CustomFrameView extends ItemView {
         }
     }
 
-    private goForward() {
+    private goForward(): void {
         if (this.frame instanceof HTMLIFrameElement) {
             this.frame.contentWindow.history.forward();
         }
@@ -120,4 +129,21 @@ export class CustomFrameView extends ItemView {
             this.frame.goForward();
         }
     }
+
+    private toggleDevTools(): void {
+        if (!(this.frame instanceof HTMLIFrameElement)) {
+            if (!this.frame.isDevToolsOpened()) {
+                this.frame.openDevTools();
+            }
+            else {
+                this.frame.closeDevTools();
+            }
+        }
+    }
+}
+
+interface Action {
+    name: string;
+    icon: string;
+    action: (view: CustomFrameView) => any;
 }
