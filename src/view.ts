@@ -8,13 +8,11 @@ export class CustomFrameView extends ItemView {
             name: "Return to original page",
             icon: "home",
             action: v => v.return()
-        },
-        {
+        }, {
             name: "Open dev tools",
             icon: "binary",
             action: v => v.toggleDevTools()
-        },
-        {
+        }, {
             name: "Copy link",
             icon: "link",
             action: v => v.copyLink()
