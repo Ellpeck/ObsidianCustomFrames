@@ -28,6 +28,7 @@ If you create a frame that you think other people would like, don't hesitate to 
 - Allow displaying custom frames in Markdown code blocks
 - Allow creating links that open in a custom frame rather than the browser
 - Possibly allow executing custom JavaScript in iframes (though security implications still need to be explored)
+- Add a global setting that causes popups to be opened in a new Obsidian window rather than the default browser
 
 ## Acknowledgements
 Thanks to [lishid](https://github.com/lishid) for their help with making iframes work in Obsidian for a purpose like this. Also thanks to them for *motivating* me to turn Obsidian Keep into a more versatile plugin, which is how Custom Frames was born.
