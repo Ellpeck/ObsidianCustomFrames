@@ -17,6 +17,7 @@ Unfortunately, Obsidian Mobile does not run on [Electron](https://www.electronjs
 By default, Custom Frames comes with a few presets that allow you to get new panes for popular sites up and running quickly.
 - [Obsidian Forum](https://forum.obsidian.md/)
 - [Google Keep](https://keep.google.com), optimized for a narrow pane on the side
+- [Google Calendar](https://calendar.google.com/calendar/u/0/r/day), optimized by removing some buttons. Close side panel with top-left button.
 - [Notion](https://www.notion.so/) (it's recommended to close Notion's sidebar if used as a side pane)
 - [Twitter](https://twitter.com)
 
