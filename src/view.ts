@@ -5,13 +5,19 @@ export class CustomFrameView extends ItemView {
 
     private static readonly actions: Action[] = [
         {
-            name: "Open dev tools",
-            icon: "binary",
-            action: v => v.toggleDevTools()
-        }, {
             name: "Return to original page",
             icon: "home",
             action: v => v.return()
+        },
+        {
+            name: "Open dev tools",
+            icon: "binary",
+            action: v => v.toggleDevTools()
+        },
+        {
+            name: "Copy link",
+            icon: "link",
+            action: v => v.copyLink()
         }, {
             name: "Refresh",
             icon: "refresh-cw",
@@ -139,6 +145,11 @@ export class CustomFrameView extends ItemView {
                 this.frame.closeDevTools();
             }
         }
+    }
+
+    private copyLink(): void {
+        let link = this.frame instanceof HTMLIFrameElement ? this.frame.contentWindow.location.href : this.frame.getURL();
+        navigator.clipboard.writeText(link);
     }
 }
 
