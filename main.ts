@@ -110,6 +110,8 @@ class CustomFrameView extends ItemView {
 
 		this.addAction("refresh-cw", "Refresh", () => this.refresh());
 		this.addAction("home", "Return to original page", () => this.return());
+		this.addAction("arrow-left", "Go back", () => this.goBack());
+		this.addAction("arrow-right", "Go forward", () => this.goForward());
 	}
 
 	onload(): void {
@@ -155,6 +157,16 @@ class CustomFrameView extends ItemView {
 			i.setIcon("home");
 			i.onClick(() => this.return());
 		});
+		menu.addItem(i => {
+			i.setTitle("Go back");
+			i.setIcon("arrow-left");
+			i.onClick(() => this.goBack());
+		});
+		menu.addItem(i => {
+			i.setTitle("Go forward");
+			i.setIcon("arrow-right");
+			i.onClick(() => this.goForward());
+		});
 	}
 
 	getViewType(): string {
@@ -182,6 +194,24 @@ class CustomFrameView extends ItemView {
 			this.frame.contentWindow.open(this.data.url);
 		} else {
 			this.frame.loadURL(this.data.url);
+		}
+	}
+
+	private goBack(): void {
+		if (this.frame instanceof HTMLIFrameElement) {
+			this.frame.contentWindow.history.back();
+		}
+		else {
+			this.frame.goBack();
+		}
+	}
+
+	private goForward() {
+		if (this.frame instanceof HTMLIFrameElement) {
+			this.frame.contentWindow.history.forward();
+		}
+		else {
+			this.frame.goForward();
 		}
 	}
 }
