@@ -77,6 +77,17 @@ export class CustomFramesSettingTab extends PluginSettingTab {
                     });
                 });
             new Setting(this.containerEl)
+                .setName("Page Zoom")
+                .setDesc("The zoom that this frame's page should be displayed with, as a percentage.")
+                .addText(t => {
+                    t.inputEl.type = "number";
+                    t.setValue(String(frame.zoomLevel * 100));
+                    t.onChange(async v => {
+                        frame.zoomLevel = v.length ? Number(v) / 100 : 1;
+                        await this.plugin.saveSettings();
+                    });
+                });
+            new Setting(this.containerEl)
                 .setName("Additional CSS")
                 .setDesc(createFragment(f => {
                     f.createSpan({ text: "A snippet of additional CSS that should be applied to this frame." });
@@ -122,7 +133,7 @@ export class CustomFramesSettingTab extends PluginSettingTab {
                         url: "",
                         displayName: "New Frame",
                         icon: "",
-                        minimumWidth: 0,
+                        zoomLevel: 1,
                         customCss: "",
                         hideOnMobile: true
                     });

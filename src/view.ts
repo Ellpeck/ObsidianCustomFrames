@@ -50,10 +50,12 @@ export class CustomFrameView extends ItemView {
         this.contentEl.empty();
         this.contentEl.addClass("custom-frames-view");
 
+        let style = `padding: ${this.settings.padding}px;`;
         if (Platform.isDesktopApp) {
             this.frame = document.createElement("webview");
             this.frame.setAttribute("allowpopups", "");
             this.frame.addEventListener("dom-ready", () => {
+                this.frame.setZoomFactor(this.data.zoomLevel);
                 this.frame.insertCSS(this.data.customCss);
             });
         }
@@ -61,9 +63,10 @@ export class CustomFrameView extends ItemView {
             this.frame = document.createElement("iframe");
             this.frame.setAttribute("sandbox", "allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts allow-top-navigation-by-user-activation");
             this.frame.setAttribute("allow", "encrypted-media; fullscreen; oversized-images; picture-in-picture; sync-xhr; geolocation;");
+            style += `transform: scale(${this.data.zoomLevel}); transform-origin: 0 0;`;
         }
         this.frame.addClass("custom-frames-frame");
-        this.frame.setAttribute("style", `padding: ${this.settings.padding}px`);
+        this.frame.setAttribute("style", style);
         this.frame.setAttribute("src", this.data.url);
         this.contentEl.appendChild(this.frame);
     }
