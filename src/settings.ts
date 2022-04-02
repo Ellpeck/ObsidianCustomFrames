@@ -46,22 +46,22 @@ div.dwlvNd {
 		hideOnMobile: true,
 		minimumWidth: 350,
 		customCss: `/* hide the help, home, search, and productivity overview buttons, create extra space, and prevent toast pop-up from acting weird */
-			[aria-label="Go to Home view"], #quick_find, [aria-label="Productivity"], [aria-label="Help & Feedback"] {
-				display: none !important;
-			}
+[aria-label="Go to Home view"], #quick_find, [aria-label="Productivity"], [aria-label="Help & Feedback"] {
+	display: none !important;
+}
 
-			.view_content {
-				padding-left: 15px;
-			}
+.view_content {
+	padding-left: 15px;
+}
 
-			.view_header {
-				padding-left: 15px;
-				padding-top: 10px;
-			}
+.view_header {
+	padding-left: 15px;
+	padding-top: 10px;
+}
 
-			.undo_toast {
-				width: 95%;
-			}` 
+.undo_toast {
+	width: 95%;
+}` 
 	},
     "notion": {
         url: "https://www.notion.so/",
