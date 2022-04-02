@@ -77,21 +77,6 @@ export class CustomFramesSettingTab extends PluginSettingTab {
                     });
                 });
             new Setting(this.containerEl)
-                .setName("Minimum Width")
-                .setDesc(createFragment(f => {
-                    f.createSpan({ text: "The width that this frame's pane should be adjusted to automatically if it is lower. Set to 0 to disable." });
-                    f.createEl("br");
-                    f.createEl("em", { text: "Note that this is only applied on Desktop." });
-                }))
-                .addText(t => {
-                    t.inputEl.type = "number";
-                    t.setValue(String(frame.minimumWidth));
-                    t.onChange(async v => {
-                        frame.minimumWidth = v.length ? Number(v) : 0;
-                        await this.plugin.saveSettings();
-                    });
-                });
-            new Setting(this.containerEl)
                 .setName("Additional CSS")
                 .setDesc(createFragment(f => {
                     f.createSpan({ text: "A snippet of additional CSS that should be applied to this frame." });

@@ -55,15 +55,6 @@ export class CustomFrameView extends ItemView {
             this.frame.setAttribute("allowpopups", "");
             this.frame.addEventListener("dom-ready", () => {
                 this.frame.insertCSS(this.data.customCss);
-
-                if (this.data.minimumWidth) {
-                    let parent = this.contentEl.closest<HTMLElement>(".workspace-split.mod-horizontal");
-                    if (parent) {
-                        let minWidth = `${this.data.minimumWidth + 2 * this.settings.padding}px`;
-                        if (parent.style.width < minWidth)
-                            parent.style.width = minWidth;
-                    }
-                }
             });
         }
         else {

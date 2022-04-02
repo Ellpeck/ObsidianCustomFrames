@@ -8,15 +8,13 @@ export const presets: Record<string, CustomFrame> = {
         displayName: "Obsidian Forum",
         icon: "edit",
         hideOnMobile: true,
-        minimumWidth: 367,
         customCss: ""
     },
-	"calendar": {
+    "calendar": {
         url: "https://calendar.google.com/calendar/u/0/r/day",
         displayName: "Google Calendar",
         icon: "calendar",
         hideOnMobile: true,
-        minimumWidth: 490,
         customCss: `/* hide right-side menu, and some buttons */
 div.d6McF,
 div.pw6cBb,
@@ -33,7 +31,6 @@ div.dwlvNd {
         displayName: "Google Keep",
         icon: "files",
         hideOnMobile: true,
-        minimumWidth: 370,
         customCss: `/* hide the menu bar and the "Keep" text */
 .PvRhvb-qAWA2, .gb_2d.gb_Zc { 
 	display: none !important; 
@@ -44,7 +41,6 @@ div.dwlvNd {
         displayName: "Notion",
         icon: "box",
         hideOnMobile: true,
-        minimumWidth: 400,
         customCss: ""
     },
     "twitter": {
@@ -52,7 +48,6 @@ div.dwlvNd {
         displayName: "Twitter",
         icon: "twitter",
         hideOnMobile: true,
-        minimumWidth: 400,
         customCss: ""
     }
 };
@@ -67,6 +62,5 @@ export interface CustomFrame {
     displayName: string;
     icon: string;
     hideOnMobile: boolean;
-    minimumWidth: number;
     customCss: string;
 }
