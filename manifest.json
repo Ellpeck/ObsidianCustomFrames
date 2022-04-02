@@ -1,7 +1,7 @@
 {
 	"id": "obsidian-custom-frames",
 	"name": "Custom Frames",
-	"version": "2.2.0",
+	"version": "2.2.1",
 	"minAppVersion": "0.14.3",
 	"description": "A plugin that turns web apps into panes using iframes with custom styling. Also comes with presets for Google Keep, Todoist and more.",
 	"author": "Ellpeck",
