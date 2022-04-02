@@ -35,7 +35,8 @@ div.dwlvNd {
         hideOnMobile: true,
         zoomLevel: 1,
         customCss: `/* hide the menu bar and the "Keep" text */
-.PvRhvb-qAWA2, .gb_2d.gb_Zc { 
+html > body > div > div > div:first-child, 
+html > body > div > header > div > div > div > div > a > span { 
 	display: none !important; 
 }`
     },
