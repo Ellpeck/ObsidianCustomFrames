@@ -7,13 +7,13 @@ An Obsidian plugin that turns web apps into panes using iframes with custom styl
 
 ![A screenshot of the plugin's settings](https://raw.githubusercontent.com/Ellpeck/ObsidianCustomFrames/master/settings.png)
 
-## Usage
+## 🤔 Usage
 To use this plugin, simply go into its settings and add a new frame, either from a preset shipped with the plugin, or a custom one that you can edit yourself. Each frame's pane can be opened using the "Custom Frames: Open" command.
 
-### On Obsidian Mobile
+### 📱 On Obsidian Mobile
 Unfortunately, Obsidian Mobile does not run on [Electron](https://www.electronjs.org/), which is what allows iframes and [webviews](https://www.electronjs.org/docs/latest/api/webview-tag) to be displayed with very few restrictions related to cookies, cross-origin resource sharing, and so on. This means that a lot of sites won't work there, especially ones that you have to log in to. However, when you create a frame, you can toggle the "Disable on Mobile" option to hide a Desktop-only frame in Obsidian mobile.
 
-## Presets
+## 📦 Presets
 By default, Custom Frames comes with a few presets that allow you to get new panes for popular sites up and running quickly.
 - [Obsidian Forum](https://forum.obsidian.md/)
 - [Google Keep](https://keep.google.com), optimized for a narrow pane on the side
@@ -24,14 +24,19 @@ By default, Custom Frames comes with a few presets that allow you to get new pan
 
 If you create a frame that you think other people would like, don't hesitate to create a pull request with [a new preset](https://github.com/Ellpeck/ObsidianCustomFrames/blob/master/src/settings.ts#L5).
 
-## Roadmap
+## 🛣️ Roadmap
 - ~~Allow setting a custom icon for each pane~~
 - Allow displaying custom frames in Markdown code blocks
 - Allow creating links that open in a custom frame rather than the browser
 - Possibly allow executing custom JavaScript in iframes (though security implications still need to be explored)
 - Add a global setting that causes popups to be opened in a new Obsidian window rather than the default browser
 
-## Acknowledgements
+## ⚠️ Known Issues
+There are a few known issues with Custom Frames. If you encounter any of these, please **don't** report it on the issue tracker.
+- In older versions of Obsidian, specifically **0.14.2 and lower**, a lot of websites don't function properly in custom frames. This is due to these older versions not having features in place that allow for frames to have special, additional functionality related to cookies and headers.
+- When dragging or moving a pane, hovering the mouse over a custom frame will cause it to get stuck or behave unexpectedly. This is an issue with Obsidian itself, which is being investigated.
+
+## 🙏 Acknowledgements
 Thanks to [lishid](https://github.com/lishid) for their help with making iframes work in Obsidian for a purpose like this. Also thanks to them for *motivating* me to turn Obsidian Keep into a more versatile plugin, which is how Custom Frames was born.
 
 If you like this plugin and want to support its development, you can do so through my website by clicking this fancy image!
