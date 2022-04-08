@@ -11,8 +11,12 @@
 	background-clip: content-box;
 }
 
-.custom-frames-add button {
+.custom-frames-add {
 	margin-left: 10px;
+}
+
+.custom-frames-show {
+	margin-bottom: 18px;
 }
 
 .custom-frames-support {
