@@ -2,7 +2,7 @@ export const defaultSettings: CustomFramesSettings = {
     frames: [],
     padding: 5
 };
-export const presets: Record<string, CustomFrame> = {
+export const presets: Record<string, CustomFrameSettings> = {
     "obsidian": {
         url: "https://forum.obsidian.md/",
         displayName: "Obsidian Forum",
@@ -83,11 +83,11 @@ html > body > div > header > div > div > div > div > a > span {
 };
 
 export interface CustomFramesSettings {
-    frames: CustomFrame[];
+    frames: CustomFrameSettings[];
     padding: number;
 }
 
-export interface CustomFrame {
+export interface CustomFrameSettings {
     url: string;
     displayName: string;
     icon: string;

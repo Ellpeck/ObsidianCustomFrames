@@ -1,5 +1,6 @@
 import { ItemView, WorkspaceLeaf, Platform, Menu } from "obsidian";
-import { CustomFrame, CustomFramesSettings } from "./settings";
+import { CustomFrame } from "./frame";
+import { CustomFrameSettings, CustomFramesSettings } from "./settings";
 
 export class CustomFrameView extends ItemView {
 
@@ -7,36 +8,36 @@ export class CustomFrameView extends ItemView {
         {
             name: "Return to original page",
             icon: "home",
-            action: v => v.return()
+            action: v => v.frame.return()
         }, {
             name: "Open dev tools",
             icon: "binary",
-            action: v => v.toggleDevTools()
+            action: v => v.frame.toggleDevTools()
         }, {
             name: "Copy link",
             icon: "link",
-            action: v => v.copyLink()
+            action: v => v.frame.copyLink()
         }, {
             name: "Refresh",
             icon: "refresh-cw",
-            action: v => v.refresh()
+            action: v => v.frame.refresh()
         }, {
             name: "Go back",
             icon: "arrow-left",
-            action: v => v.goBack()
+            action: v => v.frame.goBack()
         }, {
             name: "Go forward",
             icon: "arrow-right",
-            action: v => v.goForward()
+            action: v => v.frame.goForward()
         }
     ];
 
     private readonly settings: CustomFramesSettings;
-    private readonly data: CustomFrame;
+    private readonly data: CustomFrameSettings;
     private readonly name: string;
-    private frame: HTMLIFrameElement | any;
+    private frame: CustomFrame;
 
-    constructor(leaf: WorkspaceLeaf, settings: CustomFramesSettings, data: CustomFrame, name: string) {
+    constructor(leaf: WorkspaceLeaf, settings: CustomFramesSettings, data: CustomFrameSettings, name: string) {
         super(leaf);
         this.settings = settings;
         this.data = data;
@@ -49,26 +50,7 @@ export class CustomFrameView extends ItemView {
     onload(): void {
         this.contentEl.empty();
         this.contentEl.addClass("custom-frames-view");
-
-        let style = `padding: ${this.settings.padding}px;`;
-        if (Platform.isDesktopApp) {
-            this.frame = document.createElement("webview");
-            this.frame.setAttribute("allowpopups", "");
-            this.frame.addEventListener("dom-ready", () => {
-                this.frame.setZoomFactor(this.data.zoomLevel);
-                this.frame.insertCSS(this.data.customCss);
-            });
-        }
-        else {
-            this.frame = document.createElement("iframe");
-            this.frame.setAttribute("sandbox", "allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts allow-top-navigation-by-user-activation");
-            this.frame.setAttribute("allow", "encrypted-media; fullscreen; oversized-images; picture-in-picture; sync-xhr; geolocation;");
-            style += `transform: scale(${this.data.zoomLevel}); transform-origin: 0 0;`;
-        }
-        this.frame.addClass("custom-frames-frame");
-        this.frame.setAttribute("style", style);
-        this.frame.setAttribute("src", this.data.url);
-        this.contentEl.appendChild(this.frame);
+        this.contentEl.appendChild(this.frame.create());
     }
 
     onHeaderMenu(menu: Menu): void {
@@ -92,56 +74,6 @@ export class CustomFrameView extends ItemView {
 
     getIcon(): string {
         return this.data.icon ? `lucide-${this.data.icon}` : "documents";
-    }
-
-    private refresh(): void {
-        if (this.frame instanceof HTMLIFrameElement) {
-            this.frame.contentWindow.location.reload();
-        } else {
-            this.frame.reload();
-        }
-    }
-
-    private return(): void {
-        if (this.frame instanceof HTMLIFrameElement) {
-            this.frame.contentWindow.open(this.data.url);
-        } else {
-            this.frame.loadURL(this.data.url);
-        }
-    }
-
-    private goBack(): void {
-        if (this.frame instanceof HTMLIFrameElement) {
-            this.frame.contentWindow.history.back();
-        }
-        else {
-            this.frame.goBack();
-        }
-    }
-
-    private goForward(): void {
-        if (this.frame instanceof HTMLIFrameElement) {
-            this.frame.contentWindow.history.forward();
-        }
-        else {
-            this.frame.goForward();
-        }
-    }
-
-    private toggleDevTools(): void {
-        if (!(this.frame instanceof HTMLIFrameElement)) {
-            if (!this.frame.isDevToolsOpened()) {
-                this.frame.openDevTools();
-            }
-            else {
-                this.frame.closeDevTools();
-            }
-        }
-    }
-
-    private copyLink(): void {
-        let link = this.frame instanceof HTMLIFrameElement ? this.frame.contentWindow.location.href : this.frame.getURL();
-        navigator.clipboard.writeText(link);
     }
 }
 
