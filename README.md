@@ -25,7 +25,7 @@ frame: YOUR FRAME'S NAME
 style: SOME CSS
 ~~~
 
-Here's an example that creates a very tall embed using the [Google Keep preset](#📦-presets):
+Here's an example that creates a very tall embed using the [Google Keep preset](#-presets):
 ~~~
 ```custom-frames
 frame: Google Keep
