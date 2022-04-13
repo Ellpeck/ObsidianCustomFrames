@@ -50,6 +50,10 @@ export default class CustomFramesPlugin extends Plugin {
 				e.createSpan({ text: `Couldn't find a frame with name ${frameName}` });
 				return;
 			}
+			if (Platform.isMobileApp && data.hideOnMobile) {
+				e.createSpan({ text: `${frameName} is hidden on mobile` });
+				return;
+			}
 
 			let styleMatch = /style:([^\n]+)/gi.exec(s);
 			let style = styleMatch && styleMatch[1].trim();
