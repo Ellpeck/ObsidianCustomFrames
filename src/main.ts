@@ -1,4 +1,5 @@
 import { Plugin, Platform } from "obsidian";
+import { CustomFrame } from "./frame";
 import { CustomFramesSettings, defaultSettings } from "./settings";
 import { CustomFramesSettingTab } from "./settings-tab";
 import { CustomFrameView } from "./view";
@@ -33,6 +34,30 @@ export default class CustomFramesPlugin extends Plugin {
 		}
 
 		this.addSettingTab(new CustomFramesSettingTab(this.app, this));
+
+		this.registerMarkdownCodeBlockProcessor("custom-frames", (s, e, ctx) => {
+			e.empty();
+			e.addClass("custom-frames-view-file");
+
+			let frameMatch = /frame:([^\n]+)/gi.exec(s);
+			let frameName = frameMatch && frameMatch[1].trim();
+			if (!frameName) {
+				e.createSpan({ text: "Couldn't parse frame name" });
+				return;
+			}
+			let data = this.settings.frames.find(f => f.displayName == frameName);
+			if (!data) {
+				e.createSpan({ text: `Couldn't find a frame with name ${frameName}` });
+				return;
+			}
+
+			let styleMatch = /style:([^\n]+)/gi.exec(s);
+			let style = styleMatch && styleMatch[1].trim();
+			style ||= "height: 600px;";
+
+			let frame = new CustomFrame(this.settings, data);
+			e.appendChild(frame.create(style));
+		});
 	}
 
 	async loadSettings() {

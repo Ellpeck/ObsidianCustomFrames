@@ -32,16 +32,15 @@ export class CustomFrameView extends ItemView {
         }
     ];
 
-    private readonly settings: CustomFramesSettings;
     private readonly data: CustomFrameSettings;
     private readonly name: string;
     private frame: CustomFrame;
 
     constructor(leaf: WorkspaceLeaf, settings: CustomFramesSettings, data: CustomFrameSettings, name: string) {
         super(leaf);
-        this.settings = settings;
         this.data = data;
         this.name = name;
+        this.frame = new CustomFrame(settings, data);
 
         for (let action of CustomFrameView.actions)
             this.addAction(action.icon, action.name, () => action.action(this));
