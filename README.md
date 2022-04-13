@@ -10,6 +10,29 @@ An Obsidian plugin that turns web apps into panes using iframes with custom styl
 ## 🤔 Usage
 To use this plugin, simply go into its settings and add a new frame, either from a preset shipped with the plugin, or a custom one that you can edit yourself. Each frame's pane can be opened using the "Custom Frames: Open" command.
 
+### 🗒️ Markdown Mode
+You can also display your custom frames in your Markdown documents. Custom Frames adds a special code block syntax that transforms the code block into a custom frame in Live Preview and Reading mode. Your code block should look like this:
+~~~
+```custom-frames
+frame: YOUR FRAME'S NAME
+```
+~~~
+
+Optionally, you can also pass custom style settings to the embed, which allows you to change things like the embed's height:
+~~~
+```custom-frames
+frame: YOUR FRAME'S NAME
+style: SOME CSS
+~~~
+
+Here's an example that creates a very tall embed using the [Google Keep preset](#📦-presets):
+~~~
+```custom-frames
+frame: Google Keep
+style: height: 1000px;
+```
+~~~
+
 ### 📱 On Obsidian Mobile
 Unfortunately, Obsidian Mobile does not run on [Electron](https://www.electronjs.org/), which is what allows iframes and [webviews](https://www.electronjs.org/docs/latest/api/webview-tag) to be displayed with very few restrictions related to cookies, cross-origin resource sharing, and so on. This means that a lot of sites won't work there, especially ones that you have to log in to. However, when you create a frame, you can toggle the "Disable on Mobile" option to hide a Desktop-only frame in Obsidian mobile.
 
@@ -26,10 +49,11 @@ If you create a frame that you think other people would like, don't hesitate to 
 
 ## 🛣️ Roadmap
 - ~~Allow setting a custom icon for each pane~~
-- Allow displaying custom frames in Markdown code blocks
+- ~~Allow displaying custom frames in Markdown code blocks~~
 - Allow creating links that open in a custom frame rather than the browser
 - Possibly allow executing custom JavaScript in iframes (though security implications still need to be explored)
 - Add a global setting that causes popups to be opened in a new Obsidian window rather than the default browser
+- Add more options to Markdown mode, like allowing for back and forward buttons
 
 ## ⚠️ Known Issues
 There are a few known issues with Custom Frames. If you encounter any of these, please **don't** report it on the issue tracker.

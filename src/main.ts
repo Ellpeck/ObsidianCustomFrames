@@ -35,7 +35,7 @@ export default class CustomFramesPlugin extends Plugin {
 
 		this.addSettingTab(new CustomFramesSettingTab(this.app, this));
 
-		this.registerMarkdownCodeBlockProcessor("custom-frames", (s, e, ctx) => {
+		this.registerMarkdownCodeBlockProcessor("custom-frames", (s, e) => {
 			e.empty();
 			e.addClass("custom-frames-view-file");
 
