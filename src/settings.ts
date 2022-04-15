@@ -8,6 +8,7 @@ export const presets: Record<string, CustomFrameSettings> = {
         displayName: "Obsidian Forum",
         icon: "edit",
         hideOnMobile: true,
+        addRibbonIcon: true,
         zoomLevel: 1,
         customCss: ""
     },
@@ -16,6 +17,7 @@ export const presets: Record<string, CustomFrameSettings> = {
         displayName: "Google Calendar",
         icon: "calendar",
         hideOnMobile: true,
+        addRibbonIcon: true,
         zoomLevel: 1,
         customCss: `/* hide right-side menu, and some buttons */
 div.d6McF,
@@ -33,6 +35,7 @@ div.dwlvNd {
         displayName: "Google Keep",
         icon: "files",
         hideOnMobile: true,
+        addRibbonIcon: false,
         zoomLevel: 1,
         customCss: `/* hide the menu bar and the "Keep" text */
 html > body > div:nth-child(2) > div:nth-child(2) > div:first-child, 
@@ -45,6 +48,7 @@ html > body > div:first-child > header:first-child > div > div:first-child > div
         displayName: "Todoist",
         icon: "list-checks",
         hideOnMobile: true,
+        addRibbonIcon: false,
         zoomLevel: 1,
         customCss: `/* hide the help, home, search, and productivity overview buttons, create extra space, and prevent toast pop-up from acting weird */
 [aria-label="Go to Home view"], #quick_find, [aria-label="Productivity"], [aria-label="Help & Feedback"] {
@@ -69,6 +73,7 @@ html > body > div:first-child > header:first-child > div > div:first-child > div
         displayName: "Notion",
         icon: "box",
         hideOnMobile: true,
+        addRibbonIcon: true,
         zoomLevel: 1,
         customCss: ""
     },
@@ -77,6 +82,7 @@ html > body > div:first-child > header:first-child > div > div:first-child > div
         displayName: "Twitter",
         icon: "twitter",
         hideOnMobile: true,
+        addRibbonIcon: false,
         zoomLevel: 1,
         customCss: ""
     }
@@ -92,6 +98,11 @@ export interface CustomFrameSettings {
     displayName: string;
     icon: string;
     hideOnMobile: boolean;
+    addRibbonIcon: boolean;
     zoomLevel: number;
     customCss: string;
+}
+
+export function getIcon(settings: CustomFrameSettings) {
+    return settings.icon ? `lucide-${settings.icon}` : "documents";
 }

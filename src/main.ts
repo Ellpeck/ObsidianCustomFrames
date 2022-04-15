@@ -1,6 +1,6 @@
 import { Plugin, Platform } from "obsidian";
 import { CustomFrame } from "./frame";
-import { CustomFramesSettings, defaultSettings } from "./settings";
+import { CustomFramesSettings, defaultSettings, getIcon } from "./settings";
 import { CustomFramesSettingTab } from "./settings-tab";
 import { CustomFrameView } from "./view";
 
@@ -28,6 +28,9 @@ export default class CustomFramesPlugin extends Plugin {
 					name: `Open ${frame.displayName}`,
 					callback: () => this.openLeaf(name),
 				});
+
+				if (frame.addRibbonIcon)
+					this.addRibbonIcon(getIcon(frame), `Open ${frame.displayName}`, () => this.openLeaf(name));
 			} catch {
 				console.error(`Couldn't register frame ${name}, is there already one with the same name?`);
 			}

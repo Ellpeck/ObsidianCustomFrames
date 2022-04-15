@@ -92,6 +92,16 @@ export class CustomFramesSettingTab extends PluginSettingTab {
                     });
                 });
             new Setting(content)
+                .setName("Add Ribbon Icon")
+                .setDesc("Whether a button to open this frame should be added to the ribbon.")
+                .addToggle(t => {
+                    t.setValue(frame.addRibbonIcon);
+                    t.onChange(async v => {
+                        frame.addRibbonIcon = v;
+                        await this.plugin.saveSettings();
+                    });
+                });
+            new Setting(content)
                 .setName("Page Zoom")
                 .setDesc("The zoom that this frame's page should be displayed with, as a percentage.")
                 .addText(t => {
@@ -147,9 +157,10 @@ export class CustomFramesSettingTab extends PluginSettingTab {
                         url: "",
                         displayName: "New Frame",
                         icon: "",
+                        hideOnMobile: true,
+                        addRibbonIcon: false,
                         zoomLevel: 1,
-                        customCss: "",
-                        hideOnMobile: true
+                        customCss: ""
                     });
                 }
                 else {

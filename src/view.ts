@@ -1,6 +1,6 @@
-import { ItemView, WorkspaceLeaf, Platform, Menu } from "obsidian";
+import { ItemView, WorkspaceLeaf, Menu } from "obsidian";
 import { CustomFrame } from "./frame";
-import { CustomFrameSettings, CustomFramesSettings } from "./settings";
+import { CustomFrameSettings, CustomFramesSettings, getIcon } from "./settings";
 
 export class CustomFrameView extends ItemView {
 
@@ -72,7 +72,7 @@ export class CustomFrameView extends ItemView {
     }
 
     getIcon(): string {
-        return this.data.icon ? `lucide-${this.data.icon}` : "documents";
+        return getIcon(this.data);
     }
 }
 
