@@ -9,6 +9,7 @@ export const presets: Record<string, CustomFrameSettings> = {
         icon: "edit",
         hideOnMobile: true,
         addRibbonIcon: true,
+        openInCenter: true,
         zoomLevel: 1,
         customCss: ""
     },
@@ -18,6 +19,7 @@ export const presets: Record<string, CustomFrameSettings> = {
         icon: "calendar",
         hideOnMobile: true,
         addRibbonIcon: true,
+        openInCenter: true,
         zoomLevel: 1,
         customCss: `/* hide right-side menu, and some buttons */
 div.d6McF,
@@ -36,6 +38,7 @@ div.dwlvNd {
         icon: "files",
         hideOnMobile: true,
         addRibbonIcon: false,
+        openInCenter: false,
         zoomLevel: 1,
         customCss: `/* hide the menu bar and the "Keep" text */
 html > body > div:nth-child(2) > div:nth-child(2) > div:first-child, 
@@ -49,6 +52,7 @@ html > body > div:first-child > header:first-child > div > div:first-child > div
         icon: "list-checks",
         hideOnMobile: true,
         addRibbonIcon: false,
+        openInCenter: false,
         zoomLevel: 1,
         customCss: `/* hide the help, home, search, and productivity overview buttons, create extra space, and prevent toast pop-up from acting weird */
 [aria-label="Go to Home view"], #quick_find, [aria-label="Productivity"], [aria-label="Help & Feedback"] {
@@ -74,6 +78,7 @@ html > body > div:first-child > header:first-child > div > div:first-child > div
         icon: "box",
         hideOnMobile: true,
         addRibbonIcon: true,
+        openInCenter: true,
         zoomLevel: 1,
         customCss: ""
     },
@@ -83,6 +88,7 @@ html > body > div:first-child > header:first-child > div > div:first-child > div
         icon: "twitter",
         hideOnMobile: true,
         addRibbonIcon: false,
+        openInCenter: false,
         zoomLevel: 1,
         customCss: ""
     }
@@ -99,6 +105,7 @@ export interface CustomFrameSettings {
     icon: string;
     hideOnMobile: boolean;
     addRibbonIcon: boolean;
+    openInCenter: boolean;
     zoomLevel: number;
     customCss: string;
 }

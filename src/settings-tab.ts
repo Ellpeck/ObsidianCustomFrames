@@ -102,6 +102,16 @@ export class CustomFramesSettingTab extends PluginSettingTab {
                     });
                 });
             new Setting(content)
+                .setName("Open in Center")
+                .setDesc("Whether this frame should be opened in the unpinned center editor rather than one of the panes on the side. This is useful for sites that don't work well in a narrow view, or sites that don't require a note to be open when viewed.")
+                .addToggle(t => {
+                    t.setValue(frame.openInCenter);
+                    t.onChange(async v => {
+                        frame.openInCenter = v;
+                        await this.plugin.saveSettings();
+                    });
+                });
+            new Setting(content)
                 .setName("Page Zoom")
                 .setDesc("The zoom that this frame's page should be displayed with, as a percentage.")
                 .addText(t => {
@@ -159,6 +169,7 @@ export class CustomFramesSettingTab extends PluginSettingTab {
                         icon: "",
                         hideOnMobile: true,
                         addRibbonIcon: false,
+                        openInCenter: false,
                         zoomLevel: 1,
                         customCss: ""
                     });

@@ -3,12 +3,16 @@ An Obsidian plugin that turns web apps into panes using iframes with custom styl
 
 ⚠️⚠️⚠️ **For header-heavy sites like Google Keep and Todoist to work, this plugin requires Obsidian 0.14.3.** ⚠️⚠️⚠️
 
-![A screenshot of the plugin in action](https://raw.githubusercontent.com/Ellpeck/ObsidianCustomFrames/master/screenshot.png)
+![A screenshot of the plugin in action, where you can see Google Keep attached as a narrow side pane on the right](https://raw.githubusercontent.com/Ellpeck/ObsidianCustomFrames/master/screenshot.png)
+
+![A screenshot of the plugin in action, where you can see Google Calendar opened in the center, and the mouse hovering over the corresponding ribbon button](https://raw.githubusercontent.com/Ellpeck/ObsidianCustomFrames/master/screenshot-big.png)
 
 ![A screenshot of the plugin's settings](https://raw.githubusercontent.com/Ellpeck/ObsidianCustomFrames/master/settings.png)
 
 ## 🤔 Usage
 To use this plugin, simply go into its settings and add a new frame, either from a preset shipped with the plugin, or a custom one that you can edit yourself. Each frame's pane can be opened using the "Custom Frames: Open" command.
+
+There are also plenty of settings to customize your frame further, including adding custom CSS to the site, adding a ribbon icon, displaying the frame in the center of the editor, and more. 
 
 ### 🗒️ Markdown Mode
 You can also display your custom frames in your Markdown documents. Custom Frames adds a special code block syntax that transforms the code block into a custom frame in Live Preview and Reading mode. Your code block should look like this:
