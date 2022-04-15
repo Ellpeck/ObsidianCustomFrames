@@ -54,6 +54,7 @@ If you create a frame that you think other people would like, don't hesitate to 
 - Possibly allow executing custom JavaScript in iframes (though security implications still need to be explored)
 - Add a global setting that causes popups to be opened in a new Obsidian window rather than the default browser
 - Add more options to Markdown mode, like allowing for back and forward buttons
+- Add the ability to add a ribbon button for a frame that opens it in the main view
 
 ## ⚠️ Known Issues
 There are a few known issues with Custom Frames. If you encounter any of these, please **don't** report it on the issue tracker.
