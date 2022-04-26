@@ -16,7 +16,7 @@ export class CustomFrame {
         let style = `padding: ${this.settings.padding}px;`;
         if (additionalStyle)
             style += additionalStyle;
-        if (Platform.isDesktopApp) {
+        if (Platform.isDesktopApp && !this.data.forceIframe) {
             this.frame = document.createElement("webview");
             this.frame.setAttribute("allowpopups", "");
             this.frame.addEventListener("dom-ready", () => {

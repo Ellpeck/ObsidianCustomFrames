@@ -112,6 +112,20 @@ export class CustomFramesSettingTab extends PluginSettingTab {
                     });
                 });
             new Setting(content)
+                .setName("Force iframe")
+                .setDesc(createFragment(f => {
+                    f.createSpan({ text: "Whether this frame should use iframes on desktop as opposed to Electron webviews." });
+                    f.createEl("br");
+                    f.createEl("em", { text: "Only enable this setting if the frame is causing issues or frequent crashes. This setting causes all Desktop-only settings to be ignored." });
+                }))
+                .addToggle(t => {
+                    t.setValue(frame.forceIframe);
+                    t.onChange(async v => {
+                        frame.forceIframe = v;
+                        await this.plugin.saveSettings();
+                    });
+                });
+            new Setting(content)
                 .setName("Page Zoom")
                 .setDesc("The zoom that this frame's page should be displayed with, as a percentage.")
                 .addText(t => {
@@ -171,6 +185,7 @@ export class CustomFramesSettingTab extends PluginSettingTab {
                         addRibbonIcon: false,
                         openInCenter: false,
                         zoomLevel: 1,
+                        forceIframe: false,
                         customCss: ""
                     });
                 }

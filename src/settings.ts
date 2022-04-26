@@ -11,6 +11,7 @@ export const presets: Record<string, CustomFrameSettings> = {
         addRibbonIcon: true,
         openInCenter: true,
         zoomLevel: 1,
+        forceIframe: false,
         customCss: ""
     },
     "calendar": {
@@ -21,6 +22,7 @@ export const presets: Record<string, CustomFrameSettings> = {
         addRibbonIcon: true,
         openInCenter: true,
         zoomLevel: 1,
+        forceIframe: false,
         customCss: `/* hide right-side menu, and some buttons */
 div.d6McF,
 div.pw6cBb,
@@ -40,6 +42,7 @@ div.dwlvNd {
         addRibbonIcon: false,
         openInCenter: false,
         zoomLevel: 1,
+        forceIframe: false,
         customCss: `/* hide the menu bar and the "Keep" text */
 html > body > div:nth-child(2) > div:nth-child(2) > div:first-child, 
 html > body > div:first-child > header:first-child > div > div:first-child > div > div:first-child > a:first-child > span { 
@@ -54,6 +57,7 @@ html > body > div:first-child > header:first-child > div > div:first-child > div
         addRibbonIcon: false,
         openInCenter: false,
         zoomLevel: 1,
+        forceIframe: false,
         customCss: `/* hide the help, home, search, and productivity overview buttons, create extra space, and prevent toast pop-up from acting weird */
 [aria-label="Go to Home view"], #quick_find, [aria-label="Productivity"], [aria-label="Help & Feedback"] {
 	display: none !important;
@@ -80,6 +84,7 @@ html > body > div:first-child > header:first-child > div > div:first-child > div
         addRibbonIcon: true,
         openInCenter: true,
         zoomLevel: 1,
+        forceIframe: false,
         customCss: ""
     },
     "twitter": {
@@ -90,6 +95,7 @@ html > body > div:first-child > header:first-child > div > div:first-child > div
         addRibbonIcon: false,
         openInCenter: false,
         zoomLevel: 1,
+        forceIframe: false,
         customCss: ""
     }
 };
@@ -107,6 +113,7 @@ export interface CustomFrameSettings {
     addRibbonIcon: boolean;
     openInCenter: boolean;
     zoomLevel: number;
+    forceIframe: boolean;
     customCss: string;
 }
 
