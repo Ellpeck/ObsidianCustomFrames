@@ -18,13 +18,7 @@ export class CustomFramesSettingTab extends PluginSettingTab {
 
         new Setting(this.containerEl)
             .setName("Frame Padding")
-            .setDesc(createFragment(f => {
-                f.createSpan({ text: "The padding that should be left around the inside of custom frame panes, in pixels." });
-                f.createEl("br");
-                f.createEl("em", { text: "Note that decreasing this padding too much will increase the likelihood of a " });
-                f.createEl("a", { text: "known issue", href: "https://github.com/Ellpeck/ObsidianCustomFrames#%EF%B8%8F-known-issues" });
-                f.createEl("em", { text: "." });
-            }))
+            .setDesc("The padding that should be left around the inside of custom frame panes, in pixels.")
             .addText(t => {
                 t.inputEl.type = "number";
                 t.setValue(String(this.plugin.settings.padding));
