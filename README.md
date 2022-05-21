@@ -1,8 +1,6 @@
 # Obsidian Custom Frames
 An Obsidian plugin that turns web apps into panes using iframes with custom styling. Also comes with presets for Google Keep, Todoist and more.
 
-⚠️⚠️⚠️ **For header-heavy sites like Google Keep and Todoist to work, this plugin requires Obsidian 0.14.3.** ⚠️⚠️⚠️
-
 ![A screenshot of the plugin in action, where you can see Google Keep attached as a narrow side pane on the right](https://raw.githubusercontent.com/Ellpeck/ObsidianCustomFrames/master/screenshot.png)
 
 ![A screenshot of the plugin in action, where you can see Google Calendar opened in the center, and the mouse hovering over the corresponding ribbon button](https://raw.githubusercontent.com/Ellpeck/ObsidianCustomFrames/master/screenshot-big.png)
@@ -65,8 +63,8 @@ If you create a frame that you think other people would like, don't hesitate to 
 
 ## ⚠️ Known Issues
 There are a few known issues with Custom Frames. If you encounter any of these, please **don't** report it on the issue tracker.
-- In older versions of Obsidian, specifically **0.14.2 and lower**, a lot of websites don't function properly in custom frames. This is due to these older versions not having features in place that allow for frames to have special, additional functionality related to cookies and headers.
-- When dragging or moving a pane, hovering the mouse over a custom frame will cause it to get stuck or behave unexpectedly. This is an issue with Obsidian itself, which is being investigated.
+- In Obsidian **0.14.2 and lower**, a lot of websites don't function properly in custom frames. This is due to these older versions not having features in place that allow for frames to have special, additional functionality related to cookies and headers.
+- In Obsidian **0.14.5 and lower**, when dragging or moving a pane, hovering the mouse over a custom frame will cause it to get stuck or behave unexpectedly. 
 
 ## 🙏 Acknowledgements
 Thanks to [lishid](https://github.com/lishid) for their help with making iframes work in Obsidian for a purpose like this. Also thanks to them for *motivating* me to turn Obsidian Keep into a more versatile plugin, which is how Custom Frames was born.
