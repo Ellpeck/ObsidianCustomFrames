@@ -10,7 +10,10 @@ An Obsidian plugin that turns web apps into panes using iframes with custom styl
 ![A screenshot of the plugin's settings](https://raw.githubusercontent.com/Ellpeck/ObsidianCustomFrames/master/settings.png)
 
 ## 🤔 Usage
-To use this plugin, simply go into its settings and add a new frame, either from a preset shipped with the plugin, or a custom one that you can edit yourself. Each frame's pane can be opened using the "Custom Frames: Open" command.
+To use this plugin, simply go into its settings and add a new frame, either from a preset shipped with the plugin, or a custom one that you can edit yourself.
+
+### 🪟 Pane Mode
+To open a Custom Frame as a pane, you can use the "Custom Frames: Open" command.
 
 There are also plenty of settings to customize your frame further, including adding custom CSS to the site, adding a ribbon icon, displaying the frame in the center of the editor, and more. 
 
