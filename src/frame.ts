@@ -12,7 +12,7 @@ export class CustomFrame {
         this.data = data;
     }
 
-    public create(additionalStyle: string = undefined): any {
+    public create(additionalStyle: string = undefined,additionalUrl:string = undefined): any {
         let style = `padding: ${this.settings.padding}px;`;
         if (additionalStyle)
             style += additionalStyle;
@@ -32,7 +32,14 @@ export class CustomFrame {
         }
         this.frame.addClass("custom-frames-frame");
         this.frame.setAttribute("style", style);
-        this.frame.setAttribute("src", this.data.url);
+        if (additionalUrl) {
+            this.frame.setAttribute("src", this.data.url+additionalUrl);
+
+        }
+        else {
+            this.frame.setAttribute("src", this.data.url);
+        }
+        
         return this.frame;
     }
 
