@@ -62,8 +62,12 @@ export default class CustomFramesPlugin extends Plugin {
 			let style = styleMatch && styleMatch[1].trim();
 			style ||= "height: 600px;";
 
+			let additionalUrlMatch = /additionalStyle:([^\n]+)/gi.exec(s);
+			let additionalUrl = additionalUrlMatch && additionalUrlMatch[1].trim();
+			additionalUrl ||= "";
+
 			let frame = new CustomFrame(this.settings, data);
-			e.appendChild(frame.create(style));
+			e.appendChild(frame.create(style, additionalUrl));
 		});
 	}
 
