@@ -16,7 +16,11 @@ export class CustomFrameView extends ItemView {
         }, {
             name: "Copy link",
             icon: "link",
-            action: v => v.frame.copyLink()
+            action: v => navigator.clipboard.writeText(v.frame.getCurrentUrl())
+        }, {
+            name: "Open in browser",
+            icon: "globe",
+            action: v => open(v.frame.getCurrentUrl())
         }, {
             name: "Refresh",
             icon: "refresh-cw",

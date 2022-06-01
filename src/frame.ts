@@ -89,8 +89,7 @@ export class CustomFrame {
         }
     }
 
-    public copyLink(): void {
-        let link = this.frame instanceof HTMLIFrameElement ? this.frame.contentWindow.location.href : this.frame.getURL();
-        navigator.clipboard.writeText(link);
+    public getCurrentUrl(): string {
+        return this.frame instanceof HTMLIFrameElement ? this.frame.contentWindow.location.href : this.frame.getURL();
     }
 }
