@@ -23,18 +23,14 @@ frame: YOUR FRAME'S NAME
 ```
 ~~~
 
-Optionally, you can also pass custom style settings to the embed, which allows you to change things like the embed's height:
-~~~
-```custom-frames
-frame: YOUR FRAME'S NAME
-style: SOME CSS
-~~~
+Optionally, you can also pass custom style settings to the embed, which allows you to change things like the embed's height, as well as an additional suffix that will be appended to the frame's regular URL, which can be useful for things like displaying a specific note in Google Keep. 
 
-Here's an example that creates a very tall embed using the [Google Keep preset](#-presets):
+Here's an example using the [Google Keep preset](#-presets):
 ~~~
 ```custom-frames
 frame: Google Keep
 style: height: 1000px;
+urlSuffix: #reminders
 ```
 ~~~
 
