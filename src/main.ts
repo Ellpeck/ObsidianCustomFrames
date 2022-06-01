@@ -26,11 +26,12 @@ export default class CustomFramesPlugin extends Plugin {
 				this.addCommand({
 					id: `open-${name}`,
 					name: `Open ${frame.displayName}`,
-					callback: () => this.openLeaf(name, frame.openInCenter),
+					callback: () => this.openLeaf(name, frame.openInCenter, false),
 				});
 
 				if (frame.addRibbonIcon)
-					this.addRibbonIcon(getIcon(frame), `Open ${frame.displayName}`, () => this.openLeaf(name, frame.openInCenter));
+					this.addRibbonIcon(getIcon(frame), `Open ${frame.displayName}`,
+						e => this.openLeaf(name, frame.openInCenter, Platform.isMacOS ? e.metaKey : e.ctrlKey));
 			} catch {
 				console.error(`Couldn't register frame ${name}, is there already one with the same name?`);
 			}
@@ -75,10 +76,11 @@ export default class CustomFramesPlugin extends Plugin {
 		await this.saveData(this.settings);
 	}
 
-	private async openLeaf(name: string, center: boolean): Promise<void> {
+	private async openLeaf(name: string, center: boolean, split: boolean): Promise<void> {
 		if (center) {
 			this.app.workspace.detachLeavesOfType(name);
-			await this.app.workspace.getUnpinnedLeaf().setViewState({ type: name });
+			let leaf = split ? this.app.workspace.splitActiveLeaf() : this.app.workspace.getUnpinnedLeaf();
+			await leaf.setViewState({ type: name });
 		}
 		else {
 			if (!this.app.workspace.getLeavesOfType(name).length)
