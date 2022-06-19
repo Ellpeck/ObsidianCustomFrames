@@ -83,13 +83,12 @@ export default class CustomFramesPlugin extends Plugin {
 	private async openLeaf(name: string, center: boolean, split: boolean): Promise<void> {
 		if (center) {
 			this.app.workspace.detachLeavesOfType(name);
-			let leaf = split ? this.app.workspace.splitActiveLeaf() : this.app.workspace.getUnpinnedLeaf();
-			await leaf.setViewState({ type: name });
-		}
-		else {
+			let leaf = this.app.workspace.getLeaf(split);
+			await leaf.setViewState({ type: name, active: true });
+		} else {
 			if (!this.app.workspace.getLeavesOfType(name).length)
-				await this.app.workspace.getRightLeaf(false).setViewState({ type: name });
+				await this.app.workspace.getRightLeaf(false).setViewState({ type: name, active: true });
+			this.app.workspace.revealLeaf(this.app.workspace.getLeavesOfType(name)[0]);
 		}
-		this.app.workspace.revealLeaf(this.app.workspace.getLeavesOfType(name)[0]);
 	}
 }

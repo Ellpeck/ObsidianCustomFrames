@@ -182,8 +182,7 @@ export class CustomFramesSettingTab extends PluginSettingTab {
                         forceIframe: false,
                         customCss: ""
                     });
-                }
-                else {
+                } else {
                     this.plugin.settings.frames.push(presets[option]);
                 }
                 await this.plugin.saveSettings();

@@ -23,8 +23,7 @@ export class CustomFrame {
                 this.frame.setZoomFactor(this.data.zoomLevel);
                 this.frame.insertCSS(this.data.customCss);
             });
-        }
-        else {
+        } else {
             this.frame = document.createElement("iframe");
             this.frame.setAttribute("sandbox", "allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts allow-top-navigation-by-user-activation");
             this.frame.setAttribute("allow", "encrypted-media; fullscreen; oversized-images; picture-in-picture; sync-xhr; geolocation;");
@@ -63,8 +62,7 @@ export class CustomFrame {
     public goBack(): void {
         if (this.frame instanceof HTMLIFrameElement) {
             this.frame.contentWindow.history.back();
-        }
-        else {
+        } else {
             this.frame.goBack();
         }
     }
@@ -72,8 +70,7 @@ export class CustomFrame {
     public goForward(): void {
         if (this.frame instanceof HTMLIFrameElement) {
             this.frame.contentWindow.history.forward();
-        }
-        else {
+        } else {
             this.frame.goForward();
         }
     }
@@ -82,8 +79,7 @@ export class CustomFrame {
         if (!(this.frame instanceof HTMLIFrameElement)) {
             if (!this.frame.isDevToolsOpened()) {
                 this.frame.openDevTools();
-            }
-            else {
+            } else {
                 this.frame.closeDevTools();
             }
         }
