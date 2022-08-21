@@ -187,6 +187,11 @@ export class CustomFramesSettingTab extends PluginSettingTab {
                 this.display();
             });
 
+        var disclaimer = this.containerEl.createEl("p", { cls: "mod-warning" });
+        disclaimer.createSpan({ text: "Please be advised that, when adding a site as a custom frame, you potentially expose personal information you enter to other plugins you have installed. For more information, see " });
+        disclaimer.createEl("a", { text: "this discussion", href: "https://github.com/Ellpeck/ObsidianCustomFrames/issues/54#issuecomment-1210879685", cls: "mod-warning" });
+        disclaimer.createSpan({ text: "." });
+
         this.containerEl.createEl("hr");
         this.containerEl.createEl("p", { text: "If you like this plugin and want to support its development, you can do so through my website by clicking this fancy image!" });
         this.containerEl.createEl("a", { href: "https://ellpeck.de/support" })
