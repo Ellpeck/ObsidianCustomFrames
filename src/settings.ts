@@ -44,9 +44,9 @@ div.dwlvNd {
         zoomLevel: 1,
         forceIframe: false,
         customCss: `/* hide the menu bar and the "Keep" text */
-html > body > div:nth-child(2) > div:nth-child(2) > div:first-child, 
-html > body > div:first-child > header:first-child > div > div:first-child > div > div:first-child > a:first-child > span { 
-	display: none !important; 
+html > body > div:nth-child(2) > div:nth-child(2) > div:first-child,
+html > body > div:first-child > header:first-child > div > div:first-child > div > div:first-child > a:first-child > span {
+	display: none !important;
 }`
     },
     "todoist": {
