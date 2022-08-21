@@ -1,5 +1,5 @@
 import { Platform } from "obsidian";
-import { CustomFrameSettings, CustomFramesSettings } from "./settings";
+import { CustomFrameSettings, CustomFramesSettings, getId } from "./settings";
 
 export class CustomFrame {
 
@@ -30,6 +30,7 @@ export class CustomFrame {
             style += `transform: scale(${this.data.zoomLevel}); transform-origin: 0 0;`;
         }
         this.frame.addClass("custom-frames-frame");
+        this.frame.addClass(`custom-frames-${getId(this.data)}`);
         this.frame.setAttribute("style", style);
 
         let src = this.data.url;

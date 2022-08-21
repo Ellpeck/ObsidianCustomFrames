@@ -1,6 +1,6 @@
 import { Plugin, Platform } from "obsidian";
 import { CustomFrame } from "./frame";
-import { CustomFramesSettings, defaultSettings, getIcon } from "./settings";
+import { CustomFramesSettings, defaultSettings, getIcon, getId } from "./settings";
 import { CustomFramesSettingTab } from "./settings-tab";
 import { CustomFrameView } from "./view";
 
@@ -14,7 +14,7 @@ export default class CustomFramesPlugin extends Plugin {
 		for (let frame of this.settings.frames) {
 			if (!frame.url || !frame.displayName)
 				continue;
-			let name = `custom-frames-${frame.displayName.toLowerCase().replace(/\s/g, "-")}`;
+			let name = `custom-frames-${getId(frame)}`;
 			if (Platform.isMobileApp && frame.hideOnMobile) {
 				console.log(`Skipping frame ${name} which is hidden on mobile`);
 				continue;
