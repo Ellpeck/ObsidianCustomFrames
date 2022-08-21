@@ -14,6 +14,21 @@ export const presets: Record<string, CustomFrameSettings> = {
         forceIframe: false,
         customCss: ""
     },
+	"detexify": {
+		url: "https://detexify.kirelabs.org/classify.html",
+		displayName: "Detexify",
+		icon: "type",
+		hideOnMobile: true,
+		addRibbonIcon: true,
+		openInCenter: false,
+		zoomLevel: .95,
+		forceIframe: false,
+		customCss: `/* hide info clutter and ad banner */
+#classify--info-area, 
+.adsbygoogle {
+	display: none !important
+}`
+	},
     "calendar": {
         url: "https://calendar.google.com/calendar/u/0/r/day",
         displayName: "Google Calendar",
