@@ -1,0 +1,38 @@
+{
+  "frames": [
+    {
+      "url": "https://forum.obsidian.md/",
+      "displayName": "Obsidian Forum",
+      "icon": "edit",
+      "hideOnMobile": true,
+      "addRibbonIcon": true,
+      "openInCenter": true,
+      "zoomLevel": 1,
+      "forceIframe": false,
+      "customCss": ""
+    },
+    {
+      "url": "https://calendar.google.com/calendar/u/0/r/day",
+      "displayName": "Google Calendar",
+      "icon": "calendar",
+      "hideOnMobile": true,
+      "addRibbonIcon": true,
+      "openInCenter": true,
+      "zoomLevel": 1,
+      "forceIframe": false,
+      "customCss": "/* hide right-side menu, and some buttons */\ndiv.d6McF,\ndiv.pw6cBb,\ndiv.gb_Td.gb_Va.gb_Id,\ndiv.Kk7lMc-QWPxkf-LgbsSe-haAclf,\ndiv.h8Aqhb,\ndiv.gboEAb,\ndiv.dwlvNd {\n    display: none !important;\n}"
+    },
+    {
+      "url": "https://keep.google.com",
+      "displayName": "Google Keep",
+      "icon": "files",
+      "hideOnMobile": true,
+      "addRibbonIcon": false,
+      "openInCenter": false,
+      "zoomLevel": 1,
+      "forceIframe": false,
+      "customCss": "/* hide the menu bar and the \"Keep\" text */\nhtml > body > div:nth-child(2) > div:nth-child(2) > div:first-child, \nhtml > body > div:first-child > header:first-child > div > div:first-child > div > div:first-child > a:first-child > span { \n\tdisplay: none !important; \n}"
+    }
+  ],
+  "padding": 5
+}
