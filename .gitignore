@@ -15,5 +15,8 @@ node_modules
 # Exclude sourcemaps
 *.map
 
+# obsidian
+workspace
+
 # Exclude macOS Finder (System Explorer) View States
 .DS_Store

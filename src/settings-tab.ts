@@ -14,7 +14,7 @@ export class CustomFramesSettingTab extends PluginSettingTab {
     display(): void {
         this.containerEl.empty();
         this.containerEl.createEl("h2", { text: "Custom Frames Settings" });
-        this.containerEl.createEl("p", { text: "Note that Obsidian has to be restarted or reloaded for most of these settings to take effect.", cls: "mod-warning" });
+        this.containerEl.createEl("p", { text: "Please note that Obsidian has to be restarted or reloaded for most of these settings to take effect.", cls: "mod-warning" });
 
         new Setting(this.containerEl)
             .setName("Frame Padding")
@@ -156,9 +156,7 @@ export class CustomFramesSettingTab extends PluginSettingTab {
         }
 
         this.containerEl.createEl("hr");
-        let info = this.containerEl.createEl("p", { text: "Create a new frame, either from a preset shipped with the plugin, or a custom one that you can edit yourself. Each frame's pane can be opened using the \"Custom Frames: Open\" command." });
-        info.createEl("br");
-        info.createSpan({ text: "Note that Obsidian has to be restarted or reloaded to activate a newly added frame.", cls: "mod-warning" });
+        this.containerEl.createEl("p", { text: "Create a new frame, either from a preset shipped with the plugin, or a custom one that you can edit yourself. Each frame's pane can be opened using the \"Custom Frames: Open\" command." });
 
         let addDiv = this.containerEl.createDiv();
         let dropdown = new DropdownComponent(addDiv);
