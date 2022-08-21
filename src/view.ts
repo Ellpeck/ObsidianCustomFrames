@@ -56,14 +56,16 @@ export class CustomFrameView extends ItemView {
         this.contentEl.appendChild(this.frame.create());
     }
 
-    onHeaderMenu(menu: Menu): void {
-        super.onHeaderMenu(menu);
-        for (let action of CustomFrameView.actions) {
-            menu.addItem(i => {
-                i.setTitle(action.name);
-                i.setIcon(action.icon);
-                i.onClick(() => action.action(this));
-            });
+    onPaneMenu(menu: Menu, source: string): void {
+        super.onPaneMenu(menu, source);
+        if (source == "tab-header") {
+            for (let action of CustomFrameView.actions) {
+                menu.addItem(i => {
+                    i.setTitle(action.name);
+                    i.setIcon(action.icon);
+                    i.onClick(() => action.action(this));
+                });
+            }
         }
     }
 
