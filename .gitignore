@@ -17,6 +17,7 @@ node_modules
 
 # obsidian
 workspace
+workspace.json
 
 # Exclude macOS Finder (System Explorer) View States
 .DS_Store
