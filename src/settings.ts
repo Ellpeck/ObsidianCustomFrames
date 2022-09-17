@@ -38,15 +38,11 @@ export const presets: Record<string, CustomFrameSettings> = {
         openInCenter: true,
         zoomLevel: 1,
         forceIframe: false,
-        customCss: `/* hide right-side menu, and some buttons */
-div.d6McF,
-div.pw6cBb,
-div.gb_Td.gb_Va.gb_Id,
-div.Kk7lMc-QWPxkf-LgbsSe-haAclf,
-div.h8Aqhb,
-div.gboEAb,
-div.dwlvNd {
-    display: none !important;
+        customCss: `/* hide the menu bar, "Keep" text, and logo */
+html > body > div:nth-child(2) > div:nth-child(2) > div:first-child[class*=" "],
+html > body > div:first-child > header:first-child > div > div:first-child > div > div:first-child,
+html > body > div:nth-child(2) > div:nth-child(2) > div:first-child > div:first-child {
+display: none !important;
 }`
     },
     "keep": {
