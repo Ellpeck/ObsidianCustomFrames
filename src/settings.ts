@@ -30,7 +30,7 @@ export const presets: Record<string, CustomFrameSettings> = {
 }`
     },
     "calendar": {
-        url: "https://calendar.google.com/calendar/u/0/r/day",
+        url: "https://calendar.google.com/calendar",
         displayName: "Google Calendar",
         icon: "calendar",
         hideOnMobile: true,
