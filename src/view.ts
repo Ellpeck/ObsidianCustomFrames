@@ -80,6 +80,10 @@ export class CustomFrameView extends ItemView {
     getIcon(): string {
         return getIcon(this.data);
     }
+
+    focus(): void {
+        this.frame.focus();
+    }
 }
 
 interface Action {

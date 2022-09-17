@@ -12,7 +12,7 @@ export class CustomFrame {
         this.data = data;
     }
 
-    public create(additionalStyle: string = undefined, urlSuffix: string = undefined): any {
+    create(additionalStyle: string = undefined, urlSuffix: string = undefined): any {
         let style = `padding: ${this.settings.padding}px;`;
         if (additionalStyle)
             style += additionalStyle;
@@ -44,7 +44,7 @@ export class CustomFrame {
         return this.frame;
     }
 
-    public refresh(): void {
+    refresh(): void {
         if (this.frame instanceof HTMLIFrameElement) {
             this.frame.contentWindow.location.reload();
         } else {
@@ -52,7 +52,7 @@ export class CustomFrame {
         }
     }
 
-    public return(): void {
+    return(): void {
         if (this.frame instanceof HTMLIFrameElement) {
             this.frame.contentWindow.open(this.data.url);
         } else {
@@ -60,7 +60,7 @@ export class CustomFrame {
         }
     }
 
-    public goBack(): void {
+    goBack(): void {
         if (this.frame instanceof HTMLIFrameElement) {
             this.frame.contentWindow.history.back();
         } else {
@@ -68,7 +68,7 @@ export class CustomFrame {
         }
     }
 
-    public goForward(): void {
+    goForward(): void {
         if (this.frame instanceof HTMLIFrameElement) {
             this.frame.contentWindow.history.forward();
         } else {
@@ -76,7 +76,7 @@ export class CustomFrame {
         }
     }
 
-    public toggleDevTools(): void {
+    toggleDevTools(): void {
         if (!(this.frame instanceof HTMLIFrameElement)) {
             if (!this.frame.isDevToolsOpened()) {
                 this.frame.openDevTools();
@@ -86,7 +86,15 @@ export class CustomFrame {
         }
     }
 
-    public getCurrentUrl(): string {
+    getCurrentUrl(): string {
         return this.frame instanceof HTMLIFrameElement ? this.frame.contentWindow.location.href : this.frame.getURL();
+    }
+
+    focus(): void {
+        if (this.frame instanceof HTMLIFrameElement) {
+            this.frame.contentWindow.focus();
+        } else {
+            this.frame.focus();
+        }
     }
 }

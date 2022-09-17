@@ -1,4 +1,4 @@
-import { Plugin, Platform } from "obsidian";
+import { Plugin, Platform, WorkspaceLeaf } from "obsidian";
 import { CustomFrame } from "./frame";
 import { CustomFramesSettings, defaultSettings, getIcon, getId } from "./settings";
 import { CustomFramesSettingTab } from "./settings-tab";
@@ -81,13 +81,17 @@ export default class CustomFramesPlugin extends Plugin {
 	}
 
 	private async openLeaf(name: string, center: boolean, split: boolean): Promise<void> {
+		let leaf: WorkspaceLeaf;
 		if (center) {
-			let leaf = this.app.workspace.getLeaf(split);
+			leaf = this.app.workspace.getLeaf(split);
 			await leaf.setViewState({ type: name, active: true });
 		} else {
 			if (!this.app.workspace.getLeavesOfType(name).length)
 				await this.app.workspace.getRightLeaf(false).setViewState({ type: name, active: true });
-			this.app.workspace.revealLeaf(this.app.workspace.getLeavesOfType(name)[0]);
+			leaf = this.app.workspace.getLeavesOfType(name)[0];
+			this.app.workspace.revealLeaf(leaf);
 		}
+		if (leaf.view instanceof CustomFrameView)
+			leaf.view.focus();
 	}
 }
