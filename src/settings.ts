@@ -109,17 +109,17 @@ html > body > div:first-child > header:first-child > div > div:first-child > div
         forceIframe: false,
         customCss: ""
     },
-    'google task': {
-        url: 'https://tasks.google.com/embed/?origin=https://calendar.google.com&fullWidth=1',
-        displayName: 'Google Task',
-        icon: 'list-checks',
+    "tasks": {
+        url: "https://tasks.google.com/embed/?origin=https://calendar.google.com&fullWidth=1",
+        displayName: "Google Tasks",
+        icon: "list-checks",
         hideOnMobile: true,
         addRibbonIcon: false,
         openInCenter: false,
         zoomLevel: 1,
         forceIframe: false,
-        customCss: ''
-      }
+        customCss: ""
+    }
 };
 
 export interface CustomFramesSettings {
