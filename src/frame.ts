@@ -12,19 +12,29 @@ export class CustomFrame {
         this.data = data;
     }
 
-    create(additionalStyle: string = undefined, urlSuffix: string = undefined): any {
+    create(parent: HTMLElement, additionalStyle: string = undefined, urlSuffix: string = undefined): void {
         let style = `padding: ${this.settings.padding}px;`;
         if (additionalStyle)
             style += additionalStyle;
         if (Platform.isDesktopApp && !this.data.forceIframe) {
-            this.frame = document.createElement("webview");
+            let frameDoc = parent.doc;
+            this.frame = frameDoc.createElement("webview");
+            parent.appendChild(this.frame);
             this.frame.setAttribute("allowpopups", "");
             this.frame.addEventListener("dom-ready", () => {
                 this.frame.setZoomFactor(this.data.zoomLevel);
                 this.frame.insertCSS(this.data.customCss);
             });
+            this.frame.addEventListener("destroyed", () => {
+                // recreate the webview if it was moved to a new window
+                if (frameDoc != parent.doc) {
+                    this.frame.detach();
+                    this.create(parent, additionalStyle, urlSuffix);
+                }
+            });
         } else {
-            this.frame = document.createElement("iframe");
+            this.frame = parent.doc.createElement("iframe");
+            parent.appendChild(this.frame);
             this.frame.setAttribute("sandbox", "allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts allow-top-navigation-by-user-activation");
             this.frame.setAttribute("allow", "encrypted-media; fullscreen; oversized-images; picture-in-picture; sync-xhr; geolocation;");
             style += `transform: scale(${this.data.zoomLevel}); transform-origin: 0 0;`;
@@ -40,8 +50,6 @@ export class CustomFrame {
             src += urlSuffix;
         }
         this.frame.setAttribute("src", src);
-
-        return this.frame;
     }
 
     refresh(): void {

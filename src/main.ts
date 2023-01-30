@@ -68,7 +68,7 @@ export default class CustomFramesPlugin extends Plugin {
 			urlSuffix ||= "";
 
 			let frame = new CustomFrame(this.settings, data);
-			e.appendChild(frame.create(style, urlSuffix));
+			frame.create(e, style, urlSuffix);
 		});
 	}
 

@@ -32,6 +32,17 @@
       "zoomLevel": 1,
       "forceIframe": false,
       "customCss": "/* hide the menu bar, \"Keep\" text, and logo */\nhtml > body > div:nth-child(2) > div:nth-child(2) > div:first-child[class*=\" \"],\nhtml > body > div:first-child > header:first-child > div > div:first-child > div > div:first-child,\nhtml > body > div:nth-child(2) > div:nth-child(2) > div:first-child > div:first-child {\ndisplay: none !important;\n}"
+    },
+    {
+      "url": "https://scholar.google.com",
+      "displayName": "Scholar",
+      "icon": "book",
+      "hideOnMobile": false,
+      "addRibbonIcon": true,
+      "openInCenter": false,
+      "zoomLevel": 1,
+      "forceIframe": false,
+      "customCss": ""
     }
   ],
   "padding": 5

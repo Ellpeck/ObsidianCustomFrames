@@ -53,7 +53,7 @@ export class CustomFrameView extends ItemView {
     onload(): void {
         this.contentEl.empty();
         this.contentEl.addClass("custom-frames-view");
-        this.contentEl.appendChild(this.frame.create());
+        this.frame.create(this.contentEl);
     }
 
     onPaneMenu(menu: Menu, source: string): void {
