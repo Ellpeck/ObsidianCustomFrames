@@ -45,6 +45,7 @@ export class CustomFrameView extends ItemView {
         this.data = data;
         this.name = name;
         this.frame = new CustomFrame(settings, data);
+        this.navigation = data.openInCenter;
 
         for (let action of CustomFrameView.actions)
             this.addAction(action.icon, action.name, () => action.action(this));
