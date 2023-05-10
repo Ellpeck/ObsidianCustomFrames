@@ -38,11 +38,12 @@ export const presets: Record<string, CustomFrameSettings> = {
         openInCenter: true,
         zoomLevel: 1,
         forceIframe: false,
-        customCss: `/* hide the menu bar, "Keep" text, and logo */
-html > body > div:nth-child(2) > div:nth-child(2) > div:first-child[class*=" "],
-html > body > div:first-child > header:first-child > div > div:first-child > div > div:first-child,
-html > body > div:nth-child(2) > div:nth-child(2) > div:first-child > div:first-child {
-display: none !important;
+        customCss: `/* hide the menu bar "Calendar" text and remove minimum width */
+div[style*="min-width: 238px"] {
+    min-width: 0 !important;
+}
+div[style*="min-width: 238px"] span[role*="heading"] {
+    display: none !important;
 }`
     },
     "keep": {
