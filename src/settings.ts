@@ -41,6 +41,7 @@ export const presets: Record<string, CustomFrameSettings> = {
         customCss: `/* hide the menu bar "Calendar" text and remove minimum width */
 div[style*="min-width: 238px"] {
     min-width: 0 !important;
+    padding-right: 0 !important;
 }
 div[style*="min-width: 238px"] span[role*="heading"] {
     display: none !important;
