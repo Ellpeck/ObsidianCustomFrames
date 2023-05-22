@@ -13,7 +13,7 @@ To use this plugin, simply go into its settings and add a new frame, either from
 ### 🪟 Pane Mode
 To open a Custom Frame as a pane, you can use the "Custom Frames: Open" command.
 
-There are also plenty of settings to customize your frame further, including adding custom CSS to the site, adding a ribbon icon, displaying the frame in the center of the editor, and more. 
+There are also plenty of settings to customize your frame further, including adding custom CSS to the site, adding a ribbon icon, displaying the frame in the center of the editor, and more.
 
 ### 🗒️ Markdown Mode
 You can also display your custom frames in your Markdown documents. Custom Frames adds a special code block syntax that transforms the code block into a custom frame in Live Preview and Reading mode. Your code block should look like this:
@@ -23,7 +23,7 @@ frame: YOUR FRAME'S NAME
 ```
 ~~~
 
-Optionally, you can also pass custom style settings to the embed, which allows you to change things like the embed's height, as well as an additional suffix that will be appended to the frame's regular URL, which can be useful for things like displaying a specific note in Google Keep. 
+Optionally, you can also pass custom style settings to the embed, which allows you to change things like the embed's height, as well as an additional suffix that will be appended to the frame's regular URL, which can be useful for things like displaying a specific note in Google Keep.
 
 Here's an example using the [Google Keep preset](#-presets):
 ~~~
@@ -42,7 +42,7 @@ By default, Custom Frames comes with a few presets that allow you to get new pan
 - [Obsidian Forum](https://forum.obsidian.md/)
 - [Google Keep](https://keep.google.com), optimized for a narrow pane on the side
 - [Google Calendar](https://calendar.google.com/calendar/u/0/r/day), optimized by removing some buttons. Close side panel with top-left button.
-- [Todoist](https://todoist.com), optimized for a narrow (half-height) side panel by removing some buttons and slimming margins. 
+- [Todoist](https://todoist.com), optimized for a narrow (half-height) side panel by removing some buttons and slimming margins.
 - [Notion](https://www.notion.so/) (it's recommended to close Notion's sidebar if used as a side pane)
 - [Twitter](https://twitter.com)
 
@@ -60,7 +60,7 @@ If you create a frame that you think other people would like, don't hesitate to 
 ## ⚠️ Known Issues
 There are a few known issues with Custom Frames. If you encounter any of these, please **don't** report it on the issue tracker.
 - In Obsidian **0.14.2 and lower**, a lot of websites don't function properly in custom frames. This is due to these older versions not having features in place that allow for frames to have special, additional functionality related to cookies and headers.
-- In Obsidian **0.14.5 and lower**, when dragging or moving a pane, hovering the mouse over a custom frame will cause it to get stuck or behave unexpectedly. 
+- In Obsidian **0.14.5 and lower**, when dragging or moving a pane, hovering the mouse over a custom frame will cause it to get stuck or behave unexpectedly.
 
 ## 🙏 Acknowledgements
 Thanks to [lishid](https://github.com/lishid) for their help with making iframes work in Obsidian for a purpose like this. Also thanks to them for *motivating* me to turn Obsidian Keep into a more versatile plugin, which is how Custom Frames was born.

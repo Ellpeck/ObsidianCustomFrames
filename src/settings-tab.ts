@@ -14,7 +14,10 @@ export class CustomFramesSettingTab extends PluginSettingTab {
     display(): void {
         this.containerEl.empty();
         this.containerEl.createEl("h2", { text: "Custom Frames Settings" });
-        this.containerEl.createEl("p", { text: "Please note that Obsidian has to be restarted or reloaded for most of these settings to take effect.", cls: "mod-warning" });
+        this.containerEl.createEl("p", {
+            text: "Please note that Obsidian has to be restarted or reloaded for most of these settings to take effect.",
+            cls: "mod-warning"
+        });
 
         new Setting(this.containerEl)
             .setName("Frame Padding")
@@ -187,14 +190,20 @@ export class CustomFramesSettingTab extends PluginSettingTab {
                 this.display();
             });
 
-        var disclaimer = this.containerEl.createEl("p", { cls: "mod-warning" });
+        let disclaimer = this.containerEl.createEl("p", { cls: "mod-warning" });
         disclaimer.createSpan({ text: "Please be advised that, when adding a site as a custom frame, you potentially expose personal information you enter to other plugins you have installed. For more information, see " });
-        disclaimer.createEl("a", { text: "this discussion", href: "https://github.com/Ellpeck/ObsidianCustomFrames/issues/54#issuecomment-1210879685", cls: "mod-warning" });
+        disclaimer.createEl("a", {
+            text: "this discussion",
+            href: "https://github.com/Ellpeck/ObsidianCustomFrames/issues/54#issuecomment-1210879685",
+            cls: "mod-warning"
+        });
         disclaimer.createSpan({ text: "." });
 
         this.containerEl.createEl("hr");
         this.containerEl.createEl("p", { text: "If you like this plugin and want to support its development, you can do so through my website by clicking this fancy image!" });
-        this.containerEl.createEl("a", { href: "https://ellpeck.de/support" })
-            .createEl("img", { attr: { src: "https://ellpeck.de/res/generalsupport.png" }, cls: "custom-frames-support" });
+        this.containerEl.createEl("a", { href: "https://ellpeck.de/support" }).createEl("img", {
+            attr: { src: "https://ellpeck.de/res/generalsupport.png" },
+            cls: "custom-frames-support"
+        });
     }
 }
