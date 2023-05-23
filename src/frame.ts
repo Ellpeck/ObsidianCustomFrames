@@ -35,7 +35,7 @@ export class CustomFrame {
         } else {
             this.frame = parent.doc.createElement("iframe");
             parent.appendChild(this.frame);
-            this.frame.setAttribute("sandbox", "allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts allow-top-navigation-by-user-activation");
+            this.frame.setAttribute("sandbox", "allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts allow-top-navigation-by-user-activation allow-downloads");
             this.frame.setAttribute("allow", "encrypted-media; fullscreen; oversized-images; picture-in-picture; sync-xhr; geolocation;");
             style += `transform: scale(${this.data.zoomLevel}); transform-origin: 0 0;`;
         }
