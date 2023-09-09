@@ -20,7 +20,7 @@
       "openInCenter": false,
       "zoomLevel": 1,
       "forceIframe": false,
-      "customCss": "/* hide the menu bar and the \"Keep\" text */\nhtml > body > div:nth-child(2) > div:nth-child(2) > div:first-child, \nhtml > body > div:first-child > header:first-child > div > div:first-child > div > div:first-child > a:first-child > span { \n\tdisplay: none !important; \n}"
+      "customCss": "/* hide the menu bar, the \"Keep\" text and the Google Apps button */\nhtml > body > div:nth-child(2) > div:nth-child(2) > div:first-child, \nhtml > body > div:first-child > header:first-child > div > div:first-child > div > div:first-child > a:first-child > span, \nhtml > body > div:first-child > header:first-child > div:nth-child(2) > div:first-child > div:first-child, \nhtml > body > div:first-child > header:first-child > div:nth-child(2) > div:nth-child(3) > div:first-child > div:first-child > div:first-child { \n\tdisplay: none !important; \n}"
     },
     {
       "url": "https://calendar.google.com/calendar",
