@@ -62,6 +62,9 @@ html > body > div:first-child > header:first-child > div > div:first-child > div
 html > body > div:first-child > header:first-child > div:nth-child(2) > div:first-child > div:first-child,
 html > body > div:first-child > header:first-child > div:nth-child(2) > div:nth-child(3) > div:first-child > div:first-child > div:first-child {
 	display: none !important;
+}
+html > body > div:first-child > header:first-child > div > div:first-child > div > div:first-child > a:first-child {
+	cursor: default;
 }`
     },
     "todoist": {
