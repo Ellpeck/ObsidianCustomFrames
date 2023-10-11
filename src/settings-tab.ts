@@ -133,7 +133,7 @@ export class CustomFramesSettingTab extends PluginSettingTab {
                         await this.plugin.saveSettings();
                     });
                 });
-            new Setting(content)
+                new Setting(content)
                 .setName("Additional CSS")
                 .setDesc(createFragment(f => {
                     f.createSpan({ text: "A snippet of additional CSS that should be applied to this frame." });
@@ -146,6 +146,22 @@ export class CustomFramesSettingTab extends PluginSettingTab {
                     t.setValue(frame.customCss);
                     t.onChange(async v => {
                         frame.customCss = v;
+                        await this.plugin.saveSettings();
+                    });
+                });
+                new Setting(content)
+                .setName("Additional JS")
+                .setDesc(createFragment(f => {
+                    f.createSpan({ text: "A snippet of additional JS that should be applied to this frame." });
+                    f.createEl("br");
+                    f.createEl("em", { text: "Note that this is only applied on Desktop." });
+                }))
+                .addTextArea(t => {
+                    t.inputEl.rows = 5;
+                    t.inputEl.cols = 50;
+                    t.setValue(frame.customJs);
+                    t.onChange(async v => {
+                        frame.customJs = v;
                         await this.plugin.saveSettings();
                     });
                 });
