@@ -24,6 +24,7 @@ export class CustomFrame {
             this.frame.addEventListener("dom-ready", () => {
                 this.frame.setZoomFactor(this.data.zoomLevel);
                 this.frame.insertCSS(this.data.customCss);
+                this.frame.executeJavaScript(this.data.customJs)
             });
             this.frame.addEventListener("destroyed", () => {
                 // recreate the webview if it was moved to a new window

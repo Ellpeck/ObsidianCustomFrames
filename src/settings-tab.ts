@@ -149,6 +149,22 @@ export class CustomFramesSettingTab extends PluginSettingTab {
                         await this.plugin.saveSettings();
                     });
                 });
+            new Setting(content)
+                .setName("Additional JavaScript")
+                .setDesc(createFragment(f => {
+                    f.createSpan({ text: "A snippet of additional JavaScript that should be applied to this frame." });
+                    f.createEl("br");
+                    f.createEl("em", { text: "Note that this is only applied on Desktop." });
+                }))
+                .addTextArea(t => {
+                    t.inputEl.rows = 5;
+                    t.inputEl.cols = 50;
+                    t.setValue(frame.customJs);
+                    t.onChange(async v => {
+                        frame.customJs = v;
+                        await this.plugin.saveSettings();
+                    });
+                });
             new ButtonComponent(content)
                 .setButtonText("Remove Frame")
                 .onClick(async () => {
