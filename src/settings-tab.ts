@@ -197,7 +197,8 @@ export class CustomFramesSettingTab extends PluginSettingTab {
                         openInCenter: false,
                         zoomLevel: 1,
                         forceIframe: false,
-                        customCss: ""
+                        customCss: "",
+                        customJs: ""
                     });
                 } else {
                     this.plugin.settings.frames.push(presets[option]);
