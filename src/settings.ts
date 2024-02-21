@@ -12,7 +12,8 @@ export const presets: Record<string, CustomFrameSettings> = {
         openInCenter: true,
         zoomLevel: 1,
         forceIframe: false,
-        customCss: ""
+        customCss: "",
+        customJs: ""
     },
     "detexify": {
         url: "https://detexify.kirelabs.org/classify.html",
@@ -27,7 +28,8 @@ export const presets: Record<string, CustomFrameSettings> = {
 #classify--info-area,
 .adsbygoogle {
 	display: none !important
-}`
+}`,
+        customJs: ""
     },
     "calendar": {
         url: "https://calendar.google.com/calendar",
@@ -45,7 +47,8 @@ div[style*="min-width: 238px"] {
 }
 div[style*="min-width: 238px"] span[role*="heading"] {
     display: none !important;
-}`
+}`,
+        customJs: ""
     },
     "keep": {
         url: "https://keep.google.com",
@@ -65,7 +68,8 @@ html > body > div:first-child > header:first-child > div:nth-child(2) > div:nth-
 }
 html > body > div:first-child > header:first-child > div > div:first-child > div > div:first-child > a:first-child {
 	cursor: default;
-}`
+}`,
+        customJs: ""
     },
     "todoist": {
         url: "https://todoist.com",
@@ -92,7 +96,8 @@ html > body > div:first-child > header:first-child > div > div:first-child > div
 
 .undo_toast {
 	width: 95%;
-}`
+}`,
+        customJs: ""
     },
     "notion": {
         url: "https://www.notion.so/",
@@ -103,7 +108,8 @@ html > body > div:first-child > header:first-child > div > div:first-child > div
         openInCenter: true,
         zoomLevel: 1,
         forceIframe: false,
-        customCss: ""
+        customCss: "",
+        customJs: ""
     },
     "twitter": {
         url: "https://twitter.com",
@@ -114,7 +120,8 @@ html > body > div:first-child > header:first-child > div > div:first-child > div
         openInCenter: false,
         zoomLevel: 1,
         forceIframe: false,
-        customCss: ""
+        customCss: "",
+        customJs: ""
     },
     "tasks": {
         url: "https://tasks.google.com/embed/?origin=https://calendar.google.com&fullWidth=1",
@@ -125,7 +132,8 @@ html > body > div:first-child > header:first-child > div > div:first-child > div
         openInCenter: false,
         zoomLevel: 1,
         forceIframe: false,
-        customCss: ""
+        customCss: "",
+        customJs: ""
     }
 };
 
@@ -144,6 +152,7 @@ export interface CustomFrameSettings {
     zoomLevel: number;
     forceIframe: boolean;
     customCss: string;
+    customJs: string;
 }
 
 export function getIcon(settings: CustomFrameSettings) {
