@@ -59,10 +59,15 @@ div[style*="min-width: 238px"] span[role*="heading"] {
         openInCenter: false,
         zoomLevel: 1,
         forceIframe: false,
-        customCss: `/* hide the menu bar and the "Keep" text */
+        customCss: `/* hide the menu bar, the "Keep" text and the Google Apps button */
 html > body > div:nth-child(2) > div:nth-child(2) > div:first-child,
-html > body > div:first-child > header:first-child > div > div:first-child > div > div:first-child > a:first-child > span {
+html > body > div:first-child > header:first-child > div > div:first-child > div > div:first-child > a:first-child > span,
+html > body > div:first-child > header:first-child > div:nth-child(2) > div:first-child > div:first-child,
+html > body > div:first-child > header:first-child > div:nth-child(2) > div:nth-child(3) > div:first-child > div:first-child > div:first-child {
 	display: none !important;
+}
+html > body > div:first-child > header:first-child > div > div:first-child > div > div:first-child > a:first-child {
+	cursor: default;
 }`,
         customJs: ""
     },
