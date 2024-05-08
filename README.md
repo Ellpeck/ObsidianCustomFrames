@@ -37,6 +37,10 @@ urlSuffix: #reminders
 ### 📱 On Obsidian Mobile
 Unfortunately, Obsidian Mobile does not run on [Electron](https://www.electronjs.org/), which is what allows iframes and [webviews](https://www.electronjs.org/docs/latest/api/webview-tag) to be displayed with very few restrictions related to cookies, cross-origin resource sharing, and so on. This means that a lot of sites won't work there, especially ones that you have to log in to. However, when you create a frame, you can toggle the "Disable on Mobile" option to hide a Desktop-only frame in Obsidian mobile.
 
+Need help using the plugin? Feel free to join the Discord server!
+
+[![Join the Discord server](https://ellpeck.de/res/discord-wide.png)](https://link.ellpeck.de/discordweb)
+
 ## 📦 Presets
 By default, Custom Frames comes with a few presets that allow you to get new panes for popular sites up and running quickly.
 - [Obsidian Forum](https://forum.obsidian.md/)
@@ -68,4 +72,4 @@ Thanks to [lishid](https://github.com/lishid) for their help with making iframes
 
 If you like this plugin and want to support its development, you can do so through my website by clicking this fancy image!
 
-[![Support me (if you want), via Patreon, Ko-fi or GitHub Sponsors](https://ellpeck.de/res/generalsupport.png)](https://ellpeck.de/support)
+[![Support me (if you want), via Patreon, Ko-fi or GitHub Sponsors](https://ellpeck.de/res/generalsupport-wide.png)](https://ellpeck.de/support)
