@@ -134,7 +134,19 @@ html > body > div:first-child > header:first-child > div > div:first-child > div
         forceIframe: false,
         customCss: "",
         customJs: ""
-    }
+    },
+    "readwise-daily-review": {
+        "url": "https://readwise.io/dailyreview",
+        "displayName": "Readwise Daily Review",
+        "icon": "highlighter",
+        "hideOnMobile": true,
+        "addRibbonIcon": false,
+        "openInCenter": false,
+        "zoomLevel": 1,
+        "forceIframe": false,
+        "customCss": ".fixed-nav {\n    display: none !important;\n}",
+        "customJs": ""
+    },
 };
 
 export interface CustomFramesSettings {

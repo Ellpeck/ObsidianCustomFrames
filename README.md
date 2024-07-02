@@ -49,6 +49,7 @@ By default, Custom Frames comes with a few presets that allow you to get new pan
 - [Todoist](https://todoist.com), optimized for a narrow (half-height) side panel by removing some buttons and slimming margins.
 - [Notion](https://www.notion.so/) (it's recommended to close Notion's sidebar if used as a side pane)
 - [Twitter](https://twitter.com)
+- [Readwise Daily Review](https://readwise.io/dailyreview)
 
 If you create a frame that you think other people would like, don't hesitate to create a pull request with [a new preset](https://github.com/Ellpeck/ObsidianCustomFrames/blob/master/src/settings.ts#L5).
 
