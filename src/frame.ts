@@ -2,7 +2,6 @@ import { Platform } from "obsidian";
 import { CustomFrameSettings, CustomFramesSettings, getId } from "./settings";
 
 export class CustomFrame {
-
     private readonly settings: CustomFramesSettings;
     private readonly data: CustomFrameSettings;
     private frame: HTMLIFrameElement | any;
@@ -14,8 +13,7 @@ export class CustomFrame {
 
     create(parent: HTMLElement, additionalStyle: string = undefined, urlSuffix: string = undefined): void {
         let style = `padding: ${this.settings.padding}px;`;
-        if (additionalStyle)
-            style += additionalStyle;
+        if (additionalStyle) style += additionalStyle;
         if (Platform.isDesktopApp && !this.data.forceIframe) {
             let frameDoc = parent.doc;
             this.frame = frameDoc.createElement("webview");
@@ -24,7 +22,7 @@ export class CustomFrame {
             this.frame.addEventListener("dom-ready", () => {
                 this.frame.setZoomFactor(this.data.zoomLevel);
                 this.frame.insertCSS(this.data.customCss);
-                this.frame.executeJavaScript(this.data.customJs)
+                this.frame.executeJavaScript(this.data.customJs);
             });
             this.frame.addEventListener("destroyed", () => {
                 // recreate the webview if it was moved to a new window
@@ -44,13 +42,23 @@ export class CustomFrame {
         this.frame.addClass(`custom-frames-${getId(this.data)}`);
         this.frame.setAttribute("style", style);
 
-        let src = this.data.url;
+        let src = new URL(this.data.url);
+
         if (urlSuffix) {
-            if (!urlSuffix.startsWith("/"))
-                src += "/";
-            src += urlSuffix;
+            let suffix = new URL(urlSuffix, src.origin);
+
+            suffix.searchParams.forEach((value, key) => {
+                src.searchParams.set(key, value);
+            });
+
+            if (suffix.pathname !== "/") {
+                src.pathname += suffix.pathname;
+            }
+
+            src.hash = suffix.hash || src.hash;
         }
-        this.frame.setAttribute("src", src);
+
+        this.frame.setAttribute("src", src.toString());
     }
 
     refresh(): void {
