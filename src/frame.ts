@@ -45,12 +45,17 @@ export class CustomFrame {
         let src = new URL(this.data.url);
 
         if (urlSuffix) {
-            let suffix = new URL(urlSuffix, src);
+            let suffix = new URL(urlSuffix, src.origin);
+
             suffix.searchParams.forEach((value, key) => {
                 src.searchParams.set(key, value);
             });
+
+            if (suffix.pathname !== "/") {
+                src.pathname += suffix.pathname;
+            }
+
             src.hash = suffix.hash || src.hash;
-            src.pathname += suffix.pathname;
         }
 
         this.frame.setAttribute("src", src.toString());
