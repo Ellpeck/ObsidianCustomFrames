@@ -6,5 +6,6 @@
     "description": "A plugin that turns web apps into panes using iframes with custom styling. Also comes with presets for Google Keep, Todoist and more.",
     "author": "Ellpeck",
     "authorUrl": "https://ellpeck.de",
+    "fundingUrl": "https://ellpeck.de/support",
     "isDesktopOnly": false
 }
