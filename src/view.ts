@@ -26,13 +26,13 @@ export class CustomFrameView extends ItemView {
             icon: "refresh-cw",
             action: v => v.frame.refresh()
         }, {
-            name: "Go back",
-            icon: "arrow-left",
-            action: v => v.frame.goBack()
-        }, {
             name: "Go forward",
             icon: "arrow-right",
             action: v => v.frame.goForward()
+        }, {
+            name: "Go back",
+            icon: "arrow-left",
+            action: v => v.frame.goBack()
         }
     ];
 
