@@ -25,7 +25,6 @@
 }
 
 .custom-frames-support {
-    max-width: 50%;
-    width: 400px;
+    width: 100%;
     height: auto;
 }

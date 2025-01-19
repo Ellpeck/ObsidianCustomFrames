@@ -217,9 +217,14 @@ export class CustomFramesSettingTab extends PluginSettingTab {
         disclaimer.createSpan({ text: "." });
 
         this.containerEl.createEl("hr");
+        this.containerEl.createEl("p", { text: "Need help using the plugin? Feel free to join the Discord server!" });
+        this.containerEl.createEl("a", { href: "https://link.ellpeck.de/discordweb" }).createEl("img", {
+            attr: { src: "https://ellpeck.de/res/discord-wide.png" },
+            cls: "custom-frames-support"
+        });
         this.containerEl.createEl("p", { text: "If you like this plugin and want to support its development, you can do so through my website by clicking this fancy image!" });
         this.containerEl.createEl("a", { href: "https://ellpeck.de/support" }).createEl("img", {
-            attr: { src: "https://ellpeck.de/res/generalsupport.png" },
+            attr: { src: "https://ellpeck.de/res/generalsupport-wide.png" },
             cls: "custom-frames-support"
         });
     }
