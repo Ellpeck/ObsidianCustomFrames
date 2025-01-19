@@ -19,7 +19,6 @@ export class CustomFrame {
             this.frame = frameDoc.createElement("webview");
             // @ts-ignore - share sessions with the built-in web viewer, see https://github.com/Ellpeck/ObsidianCustomFrames/issues/136#issuecomment-2584116803
             this.frame.partition = "persist:vault-" + app.appId;
-            console.log("Set partition to", this.frame.partition);
             parent.appendChild(this.frame);
             this.frame.setAttribute("allowpopups", "");
             this.frame.addEventListener("dom-ready", () => {
