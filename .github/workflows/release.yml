@@ -1,0 +1,34 @@
+on:
+  push:
+    tags: ["*"]
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone Repository
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Build Release
+        run: npm run build
+      - name: Grab Changelog from Commit Message Body
+        run: |
+          changelog=$(echo -e "$MESSAGE" | sed -n '/^$/,$p' | sed '1d')
+          echo -e "$changelog"
+          {
+            echo 'CHANGELOG<<EOF'
+            echo -e "$changelog"
+            echo EOF
+          } >> "$GITHUB_ENV"
+        env:
+          MESSAGE: ${{ github.event.head_commit.message }}
+      - name: Upload Release
+        uses: softprops/action-gh-release@v2
+        with:
+          body: ${{ env.CHANGELOG }}
+          files: |
+            main.js
+            manifest.json
+            styles.css
