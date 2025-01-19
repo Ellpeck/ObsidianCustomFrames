@@ -11,6 +11,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
+      - name: Install
+        run: npm i
       - name: Build Release
         run: npm run build
       - name: Grab Changelog from Commit Message Body
