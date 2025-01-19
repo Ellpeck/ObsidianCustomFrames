@@ -180,8 +180,8 @@ export class CustomFramesSettingTab extends PluginSettingTab {
         let addDiv = this.containerEl.createDiv();
         let dropdown = new DropdownComponent(addDiv);
         dropdown.addOption("new", "Custom");
-        for (let key of Object.keys(presets))
-            dropdown.addOption(key, presets[key].displayName);
+        for (let [key, value] of Object.entries(presets).sort((a, b) => a[1].displayName.localeCompare(b[1].displayName)))
+            dropdown.addOption(key, value.displayName);
         new ButtonComponent(addDiv)
             .setButtonText("Add Frame")
             .setClass("custom-frames-add")
