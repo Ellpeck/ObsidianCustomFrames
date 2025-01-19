@@ -54,18 +54,18 @@ By default, Custom Frames comes with a few presets that allow you to get new pan
 If you create a frame that you think other people would like, don't hesitate to create a pull request with [a new preset](https://github.com/Ellpeck/ObsidianCustomFrames/blob/master/src/settings.ts#L5).
 
 ## 🛣️ Roadmap
+- Allow creating links outside of Obsidian that open in a custom frame
+- Add more options to Markdown mode, like allowing for back and forward buttons
+- Possibly allow extracting selected text into a note similar to how the Note composer plugin works, and potentially allow using a note template that includes the link to the site extracted from
 - ~~Allow setting a custom icon for each pane~~
 - ~~Allow displaying custom frames in Markdown code blocks~~
 - ~~Add the ability to add a ribbon button for a frame that opens it in the main view~~
-- Allow creating links outside of Obsidian that open in a custom frame
-- Possibly allow executing custom JavaScript in iframes (though security implications still need to be explored)
-- Add a global setting that causes popups to be opened in a new Obsidian window rather than the default browser
-- Add more options to Markdown mode, like allowing for back and forward buttons
-- Possibly allow extracting selected text into a note similar to how the Note composer plugin works, and potentially allow using a note template that includes the link to the site extracted from
+- ~~Possibly allow executing custom JavaScript in iframes (though security implications still need to be explored)~~
+- ~~Add a global setting that causes popups to be opened in a new Obsidian window rather than the default browser~~ (See the [web viewer core plugin](https://help.obsidian.md/plugins/web-viewer))
 
 ## ⚠️ Known Issues
 There are a few known issues with Custom Frames. If you encounter any of these, please **don't** report it on the issue tracker.
-- Popups and new tabs are currently opened in the default browser rather than the custom frame. You can find more info, including workarounds for logging in to certain sites, in [this issue](https://github.com/Ellpeck/ObsidianCustomFrames/issues/40).
+- Popups and new tabs are opened in the default browser rather than the custom frame by default, which can cause issues logging in to websites that use external logins. To circumvent this issue, enable the [web viewer core plugin](https://help.obsidian.md/plugins/web-viewer), which shares its session information with Custom Frames, to open popups within Obsidian.
 - Some links refuse to open from within custom frames, especially before Obsidian 1.3.7. You can find more info in [this issue](https://github.com/Ellpeck/ObsidianCustomFrames/issues/76).
 
 ## 🙏 Acknowledgements
