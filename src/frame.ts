@@ -54,7 +54,7 @@ export class CustomFrame {
             });
 
             if (suffix.pathname !== "/") {
-                src.pathname += suffix.pathname;
+                src.pathname = suffix.pathname;
             }
 
             src.hash = suffix.hash || src.hash;
