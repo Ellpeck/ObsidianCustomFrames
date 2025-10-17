@@ -44,23 +44,31 @@ export class CustomFrame {
         this.frame.addClass(`custom-frames-${getId(this.data)}`);
         this.frame.setAttribute("style", style);
 
-        let src = new URL(this.data.url);
-
-        if (urlSuffix) {
-            let suffix = new URL(urlSuffix, src.origin);
-
-            suffix.searchParams.forEach((value, key) => {
-                src.searchParams.set(key, value);
-            });
-
-            if (suffix.pathname !== "/") {
-                src.pathname += suffix.pathname;
-            }
-
-            src.hash = suffix.hash || src.hash;
+        let srcUrl;
+        try {
+            srcUrl = new URL(this.data.url);
+        } catch (e) {
+            // fallback: concat url and suffix directly if base URL is invalid
+            srcUrl = new URL(this.data.url + (urlSuffix || ""));
+            urlSuffix = null;
         }
 
-        this.frame.setAttribute("src", src.toString());
+        if (urlSuffix) {
+            const suffixUrl = new URL(urlSuffix, srcUrl.origin);
+
+            suffixUrl.searchParams.forEach((value, key) => {
+                srcUrl.searchParams.set(key, value);
+            });
+
+            if (suffixUrl.pathname !== "/") {
+                srcUrl.pathname = srcUrl.pathname.replace(/\/$/, "") + suffixUrl.pathname;
+            }
+
+            if (suffixUrl.hash) {
+                srcUrl.hash = suffixUrl.hash;
+            }
+        }
+        this.frame.setAttribute("src", srcUrl.toString());
     }
 
     refresh(): void {
