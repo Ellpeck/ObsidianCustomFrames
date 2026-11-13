@@ -1,6 +1,6 @@
 import {App, Platform} from "obsidian";
 import {CustomFrameSettings, CustomFramesSettings, getId} from "./settings";
-import {WebviewStub} from "./webview-stub";
+import {DomStub, WebviewStub} from "./stubs";
 
 export class CustomFrame {
     private readonly settings: CustomFramesSettings;
@@ -16,12 +16,12 @@ export class CustomFrame {
         let style = `padding: ${this.settings.padding}px;`;
         if (additionalStyle)
             style += additionalStyle;
+        let frameDoc = parent.doc as DomStub; // see DomStub comment for why we do this cast
         if (Platform.isDesktopApp && !this.data.forceIframe) {
-            let frameDoc = parent.doc;
-            this.frame = parent.createEl("webview" as keyof HTMLElementTagNameMap) as WebviewStub;
+            this.frame = frameDoc.createElement("webview" as keyof HTMLElementTagNameMap) as WebviewStub;
+            parent.appendChild(this.frame);
             // @ts-ignore - share sessions with the built-in web viewer, see https://github.com/Ellpeck/ObsidianCustomFrames/issues/136#issuecomment-2584116803
             this.frame.partition = "persist:vault-" + app.appId;
-            parent.appendChild(this.frame);
             this.frame.setAttribute("allowpopups", "");
             this.frame.addEventListener("dom-ready", () => {
                 (this.frame as WebviewStub).setZoomFactor(this.data.zoomLevel);
@@ -36,7 +36,7 @@ export class CustomFrame {
                 }
             });
         } else {
-            this.frame = parent.createEl("iframe");
+            this.frame = frameDoc.createElement("iframe");
             parent.appendChild(this.frame);
             this.frame.setAttribute("sandbox", "allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts allow-top-navigation-by-user-activation allow-downloads");
             this.frame.setAttribute("allow", "encrypted-media; fullscreen; oversized-images; picture-in-picture; sync-xhr; geolocation;");

@@ -19,7 +19,7 @@
       "addRibbonIcon": true,
       "openInCenter": false,
       "zoomLevel": 1,
-      "forceIframe": false,
+      "forceIframe": true,
       "customCss": ""
     },
     {
