@@ -14,10 +14,10 @@
     "author": "Ellpeck",
     "license": "MIT",
     "devDependencies": {
-        "@eslint/js": "^9.39.4",
+        "@eslint/js": "^10.0.0",
         "@types/node": "^22.15.17",
         "esbuild": "0.28.2",
-        "eslint": "^9.39.4",
+        "eslint": "^10.0.0",
         "eslint-plugin-obsidianmd": "^0.4.0",
         "globals": "^17.6.0",
         "jiti": "^2.6.1",
