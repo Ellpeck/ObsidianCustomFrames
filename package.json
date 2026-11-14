@@ -18,7 +18,7 @@
         "@types/node": "^22.15.17",
         "esbuild": "0.28.2",
         "eslint": "^10.0.0",
-        "eslint-plugin-obsidianmd": "^0.4.0",
+        "eslint-plugin-obsidianmd": "^0.6.0",
         "globals": "^17.6.0",
         "jiti": "^2.6.1",
         "obsidian": "latest",
